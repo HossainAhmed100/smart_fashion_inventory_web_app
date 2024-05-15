@@ -1,0 +1,212 @@
+[
+    {
+    "_id": 1,
+    "cuttingNo": "66",
+    "quantityPcs": "504",
+    "details": "Marsrize",
+    "designName": "J.G Embo",
+    "styleName": "Polo Shirt",
+    "cutting":{
+       "date": "FEB-18",
+       "status": "active",
+       "cuttingRate": "3.0",
+       "fabricsRate": "900",
+       "fabricsWeight": "76.90"
+    },
+    "embrodery": {
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active",
+       "desceiption": "10k"
+    },
+    "printing":{
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active"
+    },
+    "sewing":{
+       "rate": "31.0",
+       "reject": "2",
+       "date": "FEB-18",
+       "status": "active",
+       "accessoriesCost": "50.0"
+    }
+    },
+    {
+    "_id": 2,
+    "cuttingNo": "66",
+    "quantityPcs": "504",
+    "details": "Marsrize",
+    "designName": "J.G Embo",
+    "styleName": "Polo Shirt",
+    "cutting":{
+       "date": "FEB-18",
+       "status": "active",
+       "cuttingRate": "3.0",
+       "fabricsRate": "900",
+       "fabricsWeight": "76.90"
+    },
+    "embrodery": {
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active",
+       "desceiption": "10k"
+    },
+    "printing":{
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active"
+    },
+    "sewing":{
+       "rate": "31.0",
+       "reject": "2",
+       "date": "FEB-18",
+       "status": "active",
+       "accessoriesCost": "50.0"
+    }
+    },
+    {
+    "_id": 3,
+    "cuttingNo": "66",
+    "quantityPcs": "504",
+    "details": "Marsrize",
+    "designName": "J.G Embo",
+    "styleName": "Polo Shirt",
+    "cutting":{
+       "date": "FEB-18",
+       "status": "active",
+       "cuttingRate": "3.0",
+       "fabricsRate": "900",
+       "fabricsWeight": "76.90"
+    },
+    "embrodery": {
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active",
+       "desceiption": "10k"
+    },
+    "printing":{
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active"
+    },
+    "sewing":{
+       "rate": "31.0",
+       "reject": "2",
+       "date": "FEB-18",
+       "status": "active",
+       "accessoriesCost": "50.0"
+    }
+    },
+    {
+    "_id": 4,
+    "cuttingNo": "66",
+    "quantityPcs": "504",
+    "details": "Marsrize",
+    "designName": "J.G Embo",
+    "styleName": "Polo Shirt",
+    "cutting":{
+       "date": "FEB-18",
+       "status": "active",
+       "cuttingRate": "3.0",
+       "fabricsRate": "900",
+       "fabricsWeight": "76.90"
+    },
+    "embrodery": {
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active",
+       "desceiption": "10k"
+    },
+    "printing":{
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active"
+    },
+    "sewing":{
+       "rate": "31.0",
+       "reject": "2",
+       "date": "FEB-18",
+       "status": "active",
+       "accessoriesCost": "50.0"
+    }
+    },
+    {
+    "_id": 5,
+    "cuttingNo": "66",
+    "quantityPcs": "504",
+    "details": "Marsrize",
+    "designName": "J.G Embo",
+    "styleName": "Polo Shirt",
+    "cutting":{
+       "date": "FEB-18",
+       "status": "active",
+       "cuttingRate": "3.0",
+       "fabricsRate": "900",
+       "fabricsWeight": "76.90"
+    },
+    "embrodery": {
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active",
+       "desceiption": "10k"
+    },
+    "printing":{
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active"
+    },
+    "sewing":{
+       "rate": "31.0",
+       "reject": "2",
+       "date": "FEB-18",
+       "status": "active",
+       "accessoriesCost": "50.0"
+    }
+    },
+    {
+    "_id": 6,
+    "cuttingNo": "66",
+    "quantityPcs": "504",
+    "details": "Marsrize",
+    "designName": "J.G Embo",
+    "styleName": "Polo Shirt",
+    "cutting":{
+       "date": "FEB-18",
+       "status": "active",
+       "cuttingRate": "3.0",
+       "fabricsRate": "900",
+       "fabricsWeight": "76.90"
+    },
+    "embrodery": {
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active",
+       "desceiption": "10k"
+    },
+    "printing":{
+       "rate": "50",
+       "reject": "10",
+       "date": "FEB-18",
+       "status": "active"
+    },
+    "sewing":{
+       "rate": "31.0",
+       "reject": "2",
+       "date": "FEB-18",
+       "status": "active",
+       "accessoriesCost": "50.0"
+    }
+    }
+]
