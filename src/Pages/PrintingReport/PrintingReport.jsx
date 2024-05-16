@@ -36,7 +36,7 @@ const columns = [
   {name: "STYLE", uid: "styleName"},
   {name: "DESIGN", uid: "designName"},
   {name: "DETAILS", uid: "details"},
-  {name: "DESCRIPTION", uid: "desceiption"},
+  {name: "DESCRIPTION", uid: "printing_desceiption"},
   {name: "QUANTITY", uid: "quantityPcs", sortable: true},
   {name: "REJECT", uid: "printing_reject", sortable: true},
   {name: "RATE", uid: "printing_rate", sortable: true},
@@ -51,7 +51,7 @@ const statusOptions = [
   {name: "Complete", uid: "complete"},
 ];
 
-const INITIAL_VISIBLE_COLUMNS = ["itemNo", "printing_date", "styleName", "designName", "details", "cuttingNo", "desceiption", "quantityPcs", "printing_reject", "printing_rate", "total", "printing_status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["itemNo", "printing_date", "styleName", "designName", "details", "cuttingNo", "printing_desceiption", "quantityPcs", "printing_reject", "printing_rate", "total", "printing_status", "actions"];
 
 export default function PrintingReport() {
   const [filterValue, setFilterValue] = React.useState("");
@@ -159,7 +159,7 @@ export default function PrintingReport() {
             <p className="text-bold text-small capitalize">{cellValue}</p>
           </div>
         );
-      case "description":
+      case "printing_description":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue} Stitch</p>
