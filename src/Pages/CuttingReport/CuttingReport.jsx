@@ -19,9 +19,9 @@ import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
-import {columns, users, statusOptions} from "./CuttingData";
 import {capitalize} from "./utils";
-
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const statusColorMap = {
   active: "primary",
@@ -29,7 +29,31 @@ const statusColorMap = {
   complete: "success",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["id", "designName", "quantityPcs", "cuttingRate", "total", "fabricsWeight", "fabricsRate", "fabricsCostPerPcs", "totalCostPerUnit", "status"];
+const columns = [
+  {name: "ID", uid: "itemNo"},
+  {name: "DATE", uid: "cutting_date"},
+  {name: "CUTTING No.", uid: "cuttingNo", sortable: true},
+  {name: "STYLE", uid: "styleName"},
+  {name: "DESIGN", uid: "designName"},
+  {name: "DETAILS", uid: "details"},
+  {name: "QUANTITY (Pcs)", uid: "quantityPcs", sortable: true},
+  {name: "CUT RATE", uid: "cutting_rate", sortable: true},
+  {name: "TOTAL CUT RATE", uid: "total", sortable: true},
+  {name: "FABRICS WEIGHT", uid: "cutting_fabricsWeight", sortable: true},
+  {name: "FABRICS RATE", uid: "cutting_fabricsRate", sortable: true},
+  {name: "FABRICS COST PER (Pcs)", uid: "fabricsCostPerPcs", sortable: true},
+  {name: "TOTAL COST PER UNIT", uid: "totalCostPerUnit", sortable: true},
+  {name: "STATUS", uid: "cutting_status"},
+  {name: "ACTIONS", uid: "actions"},
+];
+
+const statusOptions = [
+  {name: "Active", uid: "active"},
+  {name: "Paused", uid: "paused"},
+  {name: "Complete", uid: "complete"},
+];
+
+const INITIAL_VISIBLE_COLUMNS = ["itemNo", "designName", "quantityPcs", "cutting_rate", "total", "cutting_fabricsWeight", "cutting_fabricsRate", "fabricsCostPerPcs", "totalCostPerUnit", "cutting_status"];
 
 export default function CuttingReport() {
   const [filterValue, setFilterValue] = useState("");
@@ -40,6 +64,14 @@ export default function CuttingReport() {
   const [sortDescriptor, setSortDescriptor] = useState({column: "quantityPcs",direction: "ascending",});
   const [page, setPage] = useState(1);
 
+  const {data: reportData = [], isLoading: isReportLoading} = useQuery({
+    queryKey: ["reportData"],
+    queryFn: async()=>{
+      const res = await axios.get("/data.json");
+      return res.data;
+    }
+  })
+
   const hasSearchFilter = Boolean(filterValue);
 
   const headerColumns = useMemo(() => {
@@ -49,21 +81,21 @@ export default function CuttingReport() {
   }, [visibleColumns]);
 
   const filteredItems = useMemo(() => {
-    let filteredUsers = [...users];
+    let filteredreportData = [...reportData];
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.styleName.toLowerCase().includes(filterValue.toLowerCase()),
+      filteredreportData = filteredreportData.filter((item) =>
+        item.styleName.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-      filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
+      filteredreportData = filteredreportData.filter((item) =>
+        Array.from(statusFilter).includes(item.cutting_status),
       );
     }
 
-    return filteredUsers;
-  }, [hasSearchFilter, filterValue, statusFilter]);
+    return filteredreportData;
+  }, [hasSearchFilter, filterValue, statusFilter, reportData]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -111,11 +143,11 @@ export default function CuttingReport() {
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = useCallback((user, columnKey) => {
-    const cellValue = user[columnKey];
+  const renderCell = useCallback((item, columnKey) => {
+    const cellValue = item[columnKey];
 
     switch (columnKey) {
-      case "date":
+      case "cutting_date":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
@@ -154,22 +186,22 @@ export default function CuttingReport() {
       case "total":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">Tk. {rateCalculete(user.cuttingRate, user.quantityPcs)}</p>
+            <p className="text-bold text-small capitalize">Tk. {rateCalculete(item.cutting_rate, item.quantityPcs)}</p>
           </div>
         );
-      case "cuttingRate":
+      case "cutting_rate":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">Tk. {cellValue}</p>
           </div>
         );
-      case "fabricsWeight":
+      case "cutting_fabricsWeight":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue} KG</p>
           </div>
         );
-      case "fabricsRate":
+      case "cutting_fabricsRate":
         return (
           <div className="flex flex-col">
           <p className="text-bold text-small capitalize">
@@ -180,18 +212,18 @@ export default function CuttingReport() {
       case "fabricsCostPerPcs":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">Tk. {fabricCostPerPcs(user?.fabricsWeight, user?.fabricsRate, user?.quantityPcs)}</p>
+            <p className="text-bold text-small capitalize">Tk. {fabricCostPerPcs(item?.cutting_fabricsWeight, item?.cutting_fabricsRate, item?.quantityPcs)}</p>
           </div>
         );
       case "totalCostPerUnit":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">Tk. {totalCostPerUnit(user?.fabricsWeight, user?.fabricsRate, user?.quantityPcs, user?.cuttingRate)}</p>
+            <p className="text-bold text-small capitalize">Tk. {totalCostPerUnit(item?.cutting_fabricsWeight, item?.cutting_fabricsRate, item?.quantityPcs, item?.cutting_rate)}</p>
           </div>
         );
-      case "status":
+      case "cutting_status":
         return (
-          <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
+          <Chip className="capitalize" color={statusColorMap[item.cutting_status]} size="sm" variant="flat">
             {cellValue}
           </Chip>
         );
@@ -200,7 +232,7 @@ export default function CuttingReport() {
           <div className="relative flex justify-end items-center gap-2">
             <Dropdown>
               <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
+                <Button isIconOnly size="sm" variant="light" aria-label="More options">
                   <VerticalDotsIcon className="text-default-300" />
                 </Button>
               </DropdownTrigger>
@@ -310,7 +342,7 @@ export default function CuttingReport() {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} Project</span>
+          <span className="text-default-400 text-small">Total {reportData.length} Project</span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
@@ -332,6 +364,7 @@ export default function CuttingReport() {
     onRowsPerPageChange,
     onSearchChange,
     onClear,
+    reportData
   ]);
 
   const bottomContent = useMemo(() => {
@@ -388,9 +421,9 @@ export default function CuttingReport() {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody isLoading={isReportLoading} emptyContent={"No reportData found"} items={sortedItems}>
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow key={item._id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}

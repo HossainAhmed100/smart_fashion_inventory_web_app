@@ -20,9 +20,9 @@ import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {capitalize} from "./utils";
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import {users} from "./EmbroideryData";
+import { useQuery } from "@tanstack/react-query";
+
 const statusColorMap = {
   active: "primary",
   paused: "danger",
@@ -30,18 +30,18 @@ const statusColorMap = {
 };
 
 const columns = [
-  {name: "ID", uid: "id"},
-  {name: "DATE", uid: "date"},
+  {name: "ID", uid: "itemNo"},
+  {name: "DATE", uid: "embrodery_date"},
   {name: "CUT No.", uid: "cuttingNo", sortable: true},
   {name: "STYLE", uid: "styleName"},
   {name: "DESIGN", uid: "designName"},
   {name: "DETAILS", uid: "details"},
-  {name: "DESCRIPTION", uid: "desceiption"},
+  {name: "DESCRIPTION", uid: "embrodery_desceiption"},
   {name: "QUANTITY", uid: "quantityPcs", sortable: true},
-  {name: "REJECT", uid: "reject", sortable: true},
-  {name: "RATE", uid: "rate", sortable: true},
+  {name: "REJECT", uid: "embrodery_reject", sortable: true},
+  {name: "RATE", uid: "embrodery_rate", sortable: true},
   {name: "TOTAL", uid: "total", sortable: true},
-  {name: "STATUS", uid: "status"},
+  {name: "STATUS", uid: "embrodery_status"},
   {name: "ACTIONS", uid: "actions"},
 ];
 
@@ -51,29 +51,26 @@ const statusOptions = [
   {name: "Complete", uid: "complete"},
 ];
 
-const INITIAL_VISIBLE_COLUMNS = ["id", "date", "styleName", "designName", "details", "cuttingNo", "desceiption", "quantityPcs", "reject", "rate", "total", "status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["itemNo", "embrodery_date", "styleName", "designName", "details", "cuttingNo", "embrodery_desceiption", "quantityPcs", "embrodery_reject", "embrodery_rate", "total", "embrodery_status", "actions"];
 
 export default function EmbroideryReport() {
-  const {data: embData = []} = useQuery({
-    queryKey: ["embData"],
-    queryFn: async()=>{
-      const res = await axios.get("/data.json");
-      return res.data;
-    }
-  })
-  console.log(embData)
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "quantityPcs",
-    direction: "ascending",
-  });
+  const [sortDescriptor, setSortDescriptor] = React.useState({column: "quantityPcs",direction: "ascending",});
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
+
+  const {data: reportData = [], isLoading: isReportLoading} = useQuery({
+    queryKey: ["reportData"],
+    queryFn: async()=>{
+      const res = await axios.get("/data.json");
+      return res.data;
+    }
+  })
 
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
@@ -82,21 +79,21 @@ export default function EmbroideryReport() {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...users];
+    let filteredUsers = [...reportData];
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.styleName.toLowerCase().includes(filterValue.toLowerCase()),
+      filteredUsers = filteredUsers.filter((data) =>
+        data.styleName.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-      filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
+      filteredUsers = filteredUsers.filter((data) =>
+        Array.from(statusFilter).includes(data.embrodery_status),
       );
     }
 
     return filteredUsers;
-  }, [hasSearchFilter, filterValue, statusFilter]);
+  }, [hasSearchFilter, filterValue, statusFilter, reportData]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -124,11 +121,11 @@ export default function EmbroideryReport() {
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = React.useCallback((user, columnKey) => {
-    const cellValue = user[columnKey];
+  const renderCell = React.useCallback((item, columnKey) => {
+    const cellValue = item[columnKey];
 
     switch (columnKey) {
-      case "date":
+      case "embrodery_date":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
@@ -158,7 +155,7 @@ export default function EmbroideryReport() {
             <p className="text-bold text-small capitalize">{cellValue}</p>
           </div>
         );
-      case "description":
+      case "embrodery_desceiption":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue} Stitch</p>
@@ -170,13 +167,13 @@ export default function EmbroideryReport() {
             <p className="text-bold text-small capitalize">{cellValue} Pcs</p>
           </div>
         );
-      case "reject":
+      case "embrodery_reject":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue} Pcs</p>
           </div>
         );
-      case "rate":
+      case "embrodery_rate":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">Tk. {cellValue}</p>
@@ -185,12 +182,12 @@ export default function EmbroideryReport() {
       case "total":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">Tk. {rateCalculete(user.rate, user.quantityPcs)}</p>
+            <p className="text-bold text-small capitalize">Tk. {rateCalculete(item.embrodery_rate, item.quantityPcs)}</p>
           </div>
         );
-      case "status":
+      case "embrodery_status":
         return (
-          <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
+          <Chip className="capitalize" color={statusColorMap[item.embrodery_status]} size="sm" variant="flat">
             {cellValue}
           </Chip>
         );
@@ -204,9 +201,9 @@ export default function EmbroideryReport() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
+                <DropdownItem aria-label="view">View</DropdownItem>
+                <DropdownItem aria-label="edit">Edit</DropdownItem>
+                <DropdownItem aria-label="delete">Delete</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -309,7 +306,7 @@ export default function EmbroideryReport() {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} Project</span>
+          <span className="text-default-400 text-small">Total {reportData.length} Project</span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
@@ -331,6 +328,7 @@ export default function EmbroideryReport() {
     onRowsPerPageChange,
     onSearchChange,
     onClear,
+    reportData
   ]);
 
   const bottomContent = React.useMemo(() => {
@@ -387,9 +385,9 @@ export default function EmbroideryReport() {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody isLoading={isReportLoading} emptyContent={"No users found"} items={sortedItems}>
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow key={item._id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}

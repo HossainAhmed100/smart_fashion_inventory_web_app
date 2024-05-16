@@ -19,8 +19,9 @@ import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
-import {columns, users, statusOptions} from "./SewingData";
 import {capitalize} from "./utils";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const statusColorMap = {
   active: "primary",
@@ -28,7 +29,29 @@ const statusColorMap = {
   complete: "success",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["id","date", "cuttingNo", "styleName", "designName", "details",  "quantityPcs", "reject", "rate", "accessoriesCost", "total", "status", "actions"];
+const columns = [
+  {name: "ID", uid: "itemNo"},
+  {name: "DATE", uid: "sewing_date"},
+  {name: "CUTTTING No.", uid: "cuttingNo", sortable: true},
+  {name: "STYLE", uid: "styleName"},
+  {name: "DESIGN", uid: "designName"},
+  {name: "DETAILS", uid: "details"},
+  {name: "QUANTITY", uid: "quantityPcs", sortable: true},
+  {name: "REJECT", uid: "sewing_reject", sortable: true},
+  {name: "RATE", uid: "sewing_rate", sortable: true},
+  {name: "ACCESSORIES COST", uid: "sewing_accessoriesCost", sortable: true},
+  {name: "TOTAL", uid: "total", sortable: true},
+  {name: "STATUS", uid: "sewing_status"},
+  {name: "ACTIONS", uid: "actions"},
+];
+
+const statusOptions = [
+  {name: "Active", uid: "active"},
+  {name: "Paused", uid: "paused"},
+  {name: "Complete", uid: "complete"},
+];
+
+const INITIAL_VISIBLE_COLUMNS = ["itemNo","sewing_date", "cuttingNo", "styleName", "designName", "details",  "quantityPcs", "sewing_reject", "sewing_rate", "sewing_accessoriesCost", "total", "sewing_status", "actions"];
 
 export default function SewingReport() {
   const [filterValue, setFilterValue] = React.useState("");
@@ -37,9 +60,18 @@ export default function SewingReport() {
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "id",
+    column: "quantityPcs",
     direction: "ascending",
   });
+  
+  const {data: reportData = [], isLoading: isReportLoading} = useQuery({
+    queryKey: ["reportData"],
+    queryFn: async()=>{
+      const res = await axios.get("/data.json");
+      return res.data;
+    }
+  })
+
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
@@ -51,21 +83,21 @@ export default function SewingReport() {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...users];
+    let filteredreportData = [...reportData];
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.styleName.toLowerCase().includes(filterValue.toLowerCase()),
+      filteredreportData = filteredreportData.filter((item) =>
+        item.styleName.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-      filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
+      filteredreportData = filteredreportData.filter((item) =>
+        Array.from(statusFilter).includes(item.status),
       );
     }
 
-    return filteredUsers;
-  }, [hasSearchFilter, filterValue, statusFilter]);
+    return filteredreportData;
+  }, [hasSearchFilter, filterValue, statusFilter, reportData]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
   
@@ -95,12 +127,11 @@ export default function SewingReport() {
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = React.useCallback((user, columnKey) => {
-    console.log(users[0])
-    const cellValue = user[columnKey];
+  const renderCell = React.useCallback((item, columnKey) => {
+    const cellValue = item[columnKey];
 
     switch (columnKey) {
-      case "date":
+      case "sewing_date":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
@@ -136,19 +167,19 @@ export default function SewingReport() {
             <p className="text-bold text-small capitalize">{cellValue} Pcs</p>
           </div>
         );
-      case "reject":
+      case "sewing_reject":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue} Pcs</p>
           </div>
         );
-      case "rate":
+      case "sewing_rate":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">Tk. cc{cellValue}</p>
           </div>
         );
-      case "accessoriesCost":
+      case "sewing_accessoriesCost":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">Tk. {cellValue}</p>
@@ -157,12 +188,12 @@ export default function SewingReport() {
       case "total":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">Tk. {totalCostPerUnit(user.rate, user.quantityPcs, user.accessoriesCost)}</p>
+            <p className="text-bold text-small capitalize">Tk. {totalCostPerUnit(item.sewing_rate, item.quantityPcs, item.sewing_accessoriesCost)}</p>
           </div>
         );
-      case "status":
+      case "sewing_status":
         return (
-          <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
+          <Chip className="capitalize" color={statusColorMap[item.sewing_status]} size="sm" variant="flat">
             {cellValue}
           </Chip>
         );
@@ -281,7 +312,7 @@ export default function SewingReport() {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} Project</span>
+          <span className="text-default-400 text-small">Total {reportData.length} Project</span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
@@ -303,6 +334,7 @@ export default function SewingReport() {
     onRowsPerPageChange,
     onSearchChange,
     onClear,
+    reportData
   ]);
 
   const bottomContent = React.useMemo(() => {
@@ -359,9 +391,9 @@ export default function SewingReport() {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody isLoading={isReportLoading} emptyContent={"No reportData found"} items={sortedItems}>
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow key={item._id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}
