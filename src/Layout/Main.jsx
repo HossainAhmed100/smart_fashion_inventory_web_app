@@ -10,8 +10,8 @@ import "./Main.css"
 
 function Main() {
   return (
-    <div className="flex h-dvh w-full">
-      <div className="relative flex h-full w-72 flex-col !border-r-small border-divider p-6 transition-width">
+    <div className="flex w-full">
+      <div className=" flex h-dvh static z-50 w-72 flex-col !border-r-small border-divider p-6 transition-width">
       <div className="flex items-center gap-3 px-3">
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground">
           <FaTshirt size={24} className="text-background"/>
@@ -22,7 +22,6 @@ function Main() {
         </div>
       </div>
       <span aria-hidden="true" className="w-px h-px block ml-1 mt-8"></span>
-    
       <div className="flex items-center gap-3 px-3">
         <span className="flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 w-8 h-8 text-tiny bg-default text-default-foreground rounded-full ring-2 ring-offset-2 ring-offset-background dark:ring-offset-background-dark ring-default flex-none">
         <Image src="https://i.pravatar.cc/150?u=a04258114e29026708c" alt="avatar" />
@@ -158,7 +157,7 @@ function Main() {
       </Button> 
       </div>
       </div>
-      <div className="w-full flex-1 flex-col p-4">
+      <div className="w-full flex-1 p-4">
         <Outlet></Outlet>
       </div>
     </div>
