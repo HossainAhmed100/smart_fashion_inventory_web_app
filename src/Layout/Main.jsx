@@ -6,12 +6,14 @@ import { PiJoystickFill } from "react-icons/pi";
 import { IoIosCut } from "react-icons/io";
 import { GiSewingMachine } from "react-icons/gi";
 import { FaTasks } from "react-icons/fa";
+import { HiOutlineViewGrid } from "react-icons/hi";
 import "./Main.css"
 
 function Main() {
   return (
     <div className="flex w-full">
-      <div className=" flex h-dvh static z-50 w-72 flex-col !border-r-small border-divider p-6 transition-width">
+      <div className="w-72">
+      <div className="mainSidebar !border-r-small  border-divider flex-col flex w-full transition-width p-6">
       <div className="flex items-center gap-3 px-3">
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground">
           <FaTshirt size={24} className="text-background"/>
@@ -31,7 +33,7 @@ function Main() {
           <p className="truncate text-tiny text-default-400">Product Manager</p>
         </div>
       </div>
-      <div className="overflow-y-auto -mr-6 h-full max-h-full py-6 pr-6" data-orientation="vertical" data-top-scroll="false" data-bottom-scroll="true">
+      <div className="overflow-y-auto -mr-6 h-full py-6 pr-6" data-orientation="vertical" data-top-scroll="false" data-bottom-scroll="true">
         <div data-slot="base" className="w-full relative flex flex-col gap-1 p-1 list-none">
           <nav data-slot="list" className="w-full flex flex-col gap-0.5 outline-none items-center scrollbar-none	 scrollbar-track-slate-300 h-32	">
           <li data-slot="base" role="presentation" className="relative mb-2 w-full">
@@ -47,7 +49,7 @@ function Main() {
               {({ isActive }) => (
               <>
               <div className="flex items-center justify-center gap-2">
-              <FaBezierCurve size={22} color={isActive ? "white" : "#a1a1aa"}/>
+              <HiOutlineViewGrid size={18} color={isActive ? "white" : "#a1a1aa"}/>
               <span className={`flex-1 ml-1 truncate text-small font-medium ${isActive ? "white" : "text-default-500"} group-data-[selected=true]:text-foreground`} data-slot="heading">Dashboard</span>
               </div>
               <FaAngleRight size={13} color={isActive ? "white" : "#a1a1aa"}/>
@@ -65,7 +67,7 @@ function Main() {
               {({ isActive }) => (
               <>
               <div className="flex items-center justify-center gap-2">
-              <FaBezierCurve size={22} color={isActive ? "white" : "#a1a1aa"}/>
+              <FaBezierCurve size={18} color={isActive ? "white" : "#a1a1aa"}/>
               <span className={`flex-1 ml-1 truncate text-small font-medium ${isActive ? "white" : "text-default-500"} group-data-[selected=true]:text-foreground`} data-slot="heading">Embroidery Report</span>
               </div>
               <FaAngleRight size={13} color={isActive ? "white" : "#a1a1aa"}/>
@@ -83,7 +85,7 @@ function Main() {
               {({ isActive }) => (
               <>
               <div className="flex items-center justify-center gap-2">
-              <PiJoystickFill size={22} color={isActive ? "white" : "#a1a1aa"}/>
+              <PiJoystickFill size={18} color={isActive ? "white" : "#a1a1aa"}/>
               <span className={`flex-1 ml-1 truncate text-small font-medium ${isActive ? "white" : "text-default-500"} group-data-[selected=true]:text-foreground`} data-slot="heading">Printing Report</span>
               </div>
               <FaAngleRight size={13} color={isActive ? "white" : "#a1a1aa"}/>
@@ -101,7 +103,7 @@ function Main() {
               {({ isActive }) => (
               <>
               <div className="flex items-center justify-center gap-2">
-              <GiSewingMachine size={22} color={isActive ? "white" : "#a1a1aa"}/>
+              <GiSewingMachine size={18} color={isActive ? "white" : "#a1a1aa"}/>
               <span className={`flex-1 ml-1 truncate text-small font-medium ${isActive ? "white" : "text-default-500"} group-data-[selected=true]:text-foreground`} data-slot="heading">Sewing Report</span>
               </div>
               <FaAngleRight size={13} color={isActive ? "white" : "#a1a1aa"}/>
@@ -119,7 +121,7 @@ function Main() {
               {({ isActive }) => (
               <>
               <div className="flex items-center justify-center gap-2">
-              <IoIosCut size={22} color={isActive ? "white" : "#a1a1aa"}/>
+              <IoIosCut size={18} color={isActive ? "white" : "#a1a1aa"}/>
               <span className={`flex-1 ml-1 truncate text-small font-medium ${isActive ? "white" : "text-default-500"} group-data-[selected=true]:text-foreground`} data-slot="heading">Cutting Report</span>
               </div>
               <FaAngleRight size={13} color={isActive ? "white" : "#a1a1aa"}/>
@@ -137,7 +139,7 @@ function Main() {
               {({ isActive }) => (
               <>
               <div className="flex items-center justify-center gap-2">
-              <FaTasks size={22} color={isActive ? "white" : "#a1a1aa"}/>
+              <FaTasks size={18} color={isActive ? "white" : "#a1a1aa"}/>
               <span className={`flex-1 ml-1 truncate text-small font-medium ${isActive ? "white" : "text-default-500"} group-data-[selected=true]:text-foreground`} data-slot="heading">Finishing Report</span>
               </div>
               <FaAngleRight size={13} color={isActive ? "white" : "#a1a1aa"}/>
@@ -155,6 +157,7 @@ function Main() {
       <Button color="danger" startContent={<FaArrowRightFromBracket />}>
         Sign Out
       </Button> 
+      </div>
       </div>
       </div>
       <div className="w-full flex-1 p-4">

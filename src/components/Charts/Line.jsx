@@ -15,7 +15,6 @@ const chartConfig = {
       },
     ],
     options: {
-      chart: { toolbar: { show: false, }, },
       colors: ["#ffe300", "#ffcdff"],
       stroke: {lineCap: "round",curve: "smooth",},
       markers: {size: 0,},

@@ -5,3 +5,11 @@
 .active div span{
     color: white;
 }
+
+/* Add this CSS to your stylesheet */
+.mainSidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh; /* Adjust height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }

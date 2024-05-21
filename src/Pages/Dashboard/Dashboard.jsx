@@ -8,8 +8,8 @@ import Area from "../../components/Charts/Area";
 function Dashboard() {
   return (
     <div>
-      <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
-        <div className="flex-1 bg-[#ffe300] rounded-3xl gap-4 p-8  min-w-44">
+      <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+        <div className=" bg-[#ffe300] rounded-3xl gap-4 p-8">
           <div>
           <h1 className="text-lg text-black font-semibold">Total Quantity</h1>
           <p className="mt-1 text-black">Token representing your tols</p>
@@ -25,7 +25,7 @@ function Dashboard() {
           </div>
           </div>
         </div>
-        <div className="flex-1 bg-[#ffcdff] rounded-3xl gap-4 p-8  min-w-44">
+        <div className=" bg-[#ffcdff] rounded-3xl gap-4 p-8">
           <div>
           <h1 className="text-lg text-black font-semibold">Total Rejet Pcs</h1>
           <p className="mt-1 text-black">Token representing your tols</p>
@@ -41,7 +41,7 @@ function Dashboard() {
           </div>
           </div>
         </div>
-        <div className="flex-1 bg-[#e4daff] rounded-3xl gap-4 p-8  min-w-44">
+        <div className=" bg-[#e4daff] rounded-3xl gap-4 p-8">
           <div>
           <h1 className="text-lg text-black font-semibold">Compeleted Project</h1>
           <p className="mt-1 text-black">Token representing your tols</p>
