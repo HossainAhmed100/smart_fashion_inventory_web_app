@@ -51,7 +51,7 @@ const statusOptions = [
   {name: "Complete", uid: "complete"},
 ];
 
-const INITIAL_VISIBLE_COLUMNS = ["itemNo", "embrodery_date", "styleName", "designName", "details", "cuttingNo", "embrodery_desceiption", "quantityPcs", "embrodery_reject", "embrodery_rate", "total", "embrodery_status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["itemNo", "embrodery_date", "styleName", "cuttingNo", "quantityPcs", "embrodery_reject", "embrodery_rate", "total", "embrodery_status", "actions"];
 
 export default function EmbroideryReport() {
   const [filterValue, setFilterValue] = React.useState("");

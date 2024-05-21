@@ -32,17 +32,17 @@ const statusColorMap = {
 const columns = [
   {name: "ID", uid: "itemNo"},
   {name: "DATE", uid: "cutting_date"},
-  {name: "CUTTING No.", uid: "cuttingNo", sortable: true},
+  {name: "CUT No.", uid: "cuttingNo", sortable: true},
   {name: "STYLE", uid: "styleName"},
   {name: "DESIGN", uid: "designName"},
   {name: "DETAILS", uid: "details"},
-  {name: "QUANTITY (Pcs)", uid: "quantityPcs", sortable: true},
+  {name: "QUANTITY", uid: "quantityPcs", sortable: true},
   {name: "CUT RATE", uid: "cutting_rate", sortable: true},
   {name: "TOTAL CUT RATE", uid: "total", sortable: true},
-  {name: "FABRICS WEIGHT", uid: "cutting_fabricsWeight", sortable: true},
-  {name: "FABRICS RATE", uid: "cutting_fabricsRate", sortable: true},
-  {name: "FABRICS COST PER (Pcs)", uid: "fabricsCostPerPcs", sortable: true},
-  {name: "TOTAL COST PER UNIT", uid: "totalCostPerUnit", sortable: true},
+  {name: "FB WEIGHT", uid: "cutting_fabricsWeight", sortable: true},
+  {name: "FB RATE", uid: "cutting_fabricsRate", sortable: true},
+  {name: "FB COST (Pcs)", uid: "fabricsCostPerPcs", sortable: true},
+  {name: "TOTAL COST (Pcs)", uid: "totalCostPerUnit", sortable: true},
   {name: "STATUS", uid: "cutting_status"},
   {name: "ACTIONS", uid: "actions"},
 ];
@@ -53,7 +53,7 @@ const statusOptions = [
   {name: "Complete", uid: "complete"},
 ];
 
-const INITIAL_VISIBLE_COLUMNS = ["itemNo", "designName", "quantityPcs", "cutting_rate", "total", "cutting_fabricsWeight", "cutting_fabricsRate", "fabricsCostPerPcs", "totalCostPerUnit", "cutting_status"];
+const INITIAL_VISIBLE_COLUMNS = ["itemNo", "cutting_rate", "total", "cutting_fabricsWeight", "cutting_fabricsRate", "fabricsCostPerPcs", "totalCostPerUnit", "cutting_status"];
 
 export default function CuttingReport() {
   const [filterValue, setFilterValue] = useState("");

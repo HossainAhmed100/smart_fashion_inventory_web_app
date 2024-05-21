@@ -40,7 +40,7 @@ const columns = [
   {name: "TOTAL REJECT", uid: "totalReject", sortable: true},
   {name: "RATE", uid: "rate", sortable: true},
   {name: "TOTAL", uid: "total", sortable: true},
-  {name: "TOTAL COST PER PCS", uid: "totalCostPerPcs", sortable: true},
+  {name: "TOTAL COST (Pcs)", uid: "totalCostPerPcs", sortable: true},
   {name: "STATUS", uid: "finising_status"},
   {name: "ACTIONS", uid: "actions"},
 ];
@@ -51,7 +51,7 @@ const statusOptions = [
   {name: "Complete", uid: "complete"},
 ];
 
-const INITIAL_VISIBLE_COLUMNS = ["itemNo", "finising_date", "styleName", "designName", "details", "description", "totalReject", "quantityPcs", "rate", "total", "totalCostPerPcs", "finising_status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["itemNo", "finising_date", "styleName", "totalReject", "quantityPcs", "rate", "total", "totalCostPerPcs", "finising_status", "actions"];
 
 export default function FinishingReport() {
   const [filterValue, setFilterValue] = React.useState("");

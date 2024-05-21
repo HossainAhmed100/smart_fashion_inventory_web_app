@@ -32,7 +32,7 @@ const statusColorMap = {
 const columns = [
   {name: "ID", uid: "itemNo"},
   {name: "DATE", uid: "sewing_date"},
-  {name: "CUTTTING No.", uid: "cuttingNo", sortable: true},
+  {name: "CUT No.", uid: "cuttingNo", sortable: true},
   {name: "STYLE", uid: "styleName"},
   {name: "DESIGN", uid: "designName"},
   {name: "DETAILS", uid: "details"},
@@ -51,7 +51,7 @@ const statusOptions = [
   {name: "Complete", uid: "complete"},
 ];
 
-const INITIAL_VISIBLE_COLUMNS = ["itemNo","sewing_date", "cuttingNo", "styleName", "designName", "details",  "quantityPcs", "sewing_reject", "sewing_rate", "sewing_accessoriesCost", "total", "sewing_status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["itemNo","sewing_date", "cuttingNo", "styleName", "quantityPcs", "sewing_reject", "sewing_rate", "sewing_accessoriesCost", "total", "sewing_status", "actions"];
 
 export default function SewingReport() {
   const [filterValue, setFilterValue] = React.useState("");
@@ -176,7 +176,7 @@ export default function SewingReport() {
       case "sewing_rate":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">Tk. cc{cellValue}</p>
+            <p className="text-bold text-small capitalize">Tk. {cellValue}</p>
           </div>
         );
       case "sewing_accessoriesCost":
