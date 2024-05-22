@@ -20,8 +20,8 @@ import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {capitalize} from "./utils";
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const statusColorMap = {
   active: "primary",
@@ -59,6 +59,7 @@ export default function PrintingReport() {
   const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const axiosPublic = useAxiosPublic();
   const [sortDescriptor, setSortDescriptor] = React.useState({
     column: "quantityPcs",
     direction: "ascending",
@@ -67,7 +68,7 @@ export default function PrintingReport() {
   const {data: reportData = [], isLoading: isReportLoading} = useQuery({
     queryKey: ["reportData"],
     queryFn: async()=>{
-      const res = await axios.get("/data.json");
+      const res = await axiosPublic.get("/reportData");
       return res.data;
     }
   })

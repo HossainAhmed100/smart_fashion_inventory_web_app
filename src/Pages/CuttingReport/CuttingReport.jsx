@@ -20,8 +20,8 @@ import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {capitalize} from "./utils";
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const statusColorMap = {
   active: "primary",
@@ -61,13 +61,14 @@ export default function CuttingReport() {
   const [visibleColumns, setVisibleColumns] = useState(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = useState("all");
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const axiosPublic = useAxiosPublic();
   const [sortDescriptor, setSortDescriptor] = useState({column: "quantityPcs",direction: "ascending",});
   const [page, setPage] = useState(1);
 
   const {data: reportData = [], isLoading: isReportLoading} = useQuery({
     queryKey: ["reportData"],
     queryFn: async()=>{
-      const res = await axios.get("/data.json");
+      const res = await axiosPublic.get("/reportData");
       return res.data;
     }
   })

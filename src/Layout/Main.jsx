@@ -1,5 +1,6 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import {Button, Image} from "@nextui-org/react";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { FaTshirt } from "react-icons/fa";
 import { FaAngleRight, FaBezierCurve, FaArrowRightFromBracket } from "react-icons/fa6";
 import { PiJoystickFill } from "react-icons/pi";
@@ -8,8 +9,14 @@ import { GiSewingMachine } from "react-icons/gi";
 import { FaTasks } from "react-icons/fa";
 import { HiOutlineViewGrid } from "react-icons/hi";
 import "./Main.css"
+import auth from "../firebase/firebase.config";
+import Swal from "sweetalert2";
 
 function Main() {
+  const [user] = useAuthState(auth);
+  console.log("🚀 ~ Main ~ user:", user)
+  const [signOut] = useSignOut(auth);
+  const navigate = useNavigate();
   return (
     <div className="flex w-full">
       <div className="w-72">
@@ -26,10 +33,10 @@ function Main() {
       <span aria-hidden="true" className="w-px h-px block ml-1 mt-8"></span>
       <div className="flex items-center gap-3 px-3">
         <span className="flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 w-8 h-8 text-tiny bg-default text-default-foreground rounded-full ring-2 ring-offset-2 ring-offset-background dark:ring-offset-background-dark ring-default flex-none">
-        <Image src="https://i.pravatar.cc/150?u=a04258114e29026708c" alt="avatar" />
+        <Image src={user?.photoURL} alt="avatar" />
         </span>
         <div className="flex max-w-full flex-col">
-        <p className="truncate text-small font-medium text-default-600">Hossain Ahmed</p>
+        <p className="truncate text-small font-medium text-default-600">{"Hossain Ahmed"}</p>
           <p className="truncate text-tiny text-default-400">Product Manager</p>
         </div>
       </div>
@@ -154,7 +161,19 @@ function Main() {
       </div>
       <span aria-hidden="true" className="w-px h-px block ml-1 mt-8"></span>
       <div className="mt-auto flex flex-col">
-      <Button color="danger" startContent={<FaArrowRightFromBracket />}>
+      <Button onClick={async () => {
+          const success = await signOut();
+          if (success) {
+            navigate("/login")
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Logout Successfull",
+                showConfirmButton: false,
+                timer: 1500
+              });
+          }
+        }} color="danger" startContent={<FaArrowRightFromBracket />}>
         Sign Out
       </Button> 
       </div>

@@ -6,11 +6,16 @@ import FinishingReport from "../Pages/FinishingReport/FinishingReport";
 import SewingReport from "../Pages/SewingReport/SewingReport";
 import CuttingReport from "../Pages/CuttingReport/CuttingReport";
 import PrintingReport from "../Pages/PrintingReport/PrintingReport";
+import PriviteRoutes from "./PriviteRoutes";
+import Login from "../Pages/Login/Login";
+import Register from "../Pages/Register/Register";
+import InsertNewData from "../Pages/InsertNewData/InsertNewData";
+import EditProject from "../Pages/EditProject/EditProject";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Main />,
+        element: <PriviteRoutes><Main /></PriviteRoutes>,
         children: [
             {
                 path: "/",
@@ -36,6 +41,22 @@ export const router = createBrowserRouter([
                 path: "/finishingReport",
                 element: <FinishingReport />
             },
+            {
+                path: "/insertNewData",
+                element: <InsertNewData />
+            },
+            {
+                path: "/editProject",
+                element: <EditProject />
+            },
         ]
+    },
+    {
+        path: "/login",
+        element: <Login />
+    },
+    {
+        path: "/register",
+        element: <Register />
     }
 ])
