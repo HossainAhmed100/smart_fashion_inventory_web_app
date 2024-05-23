@@ -15,13 +15,13 @@ import {
   Chip,
   Pagination,
 } from "@nextui-org/react";
-import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {capitalize} from "./utils";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import AddNewDataBtn from "../../components/Button/AddNewDataBtn";
 
 const statusColorMap = {
   active: "primary",
@@ -337,9 +337,7 @@ export default function CuttingReport() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button color="primary" endContent={<PlusIcon />}>
-              Add New
-            </Button>
+            <AddNewDataBtn />
           </div>
         </div>
         <div className="flex justify-between items-center">
