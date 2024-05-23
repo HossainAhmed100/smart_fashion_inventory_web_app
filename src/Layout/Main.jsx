@@ -33,7 +33,7 @@ function Main() {
       <span aria-hidden="true" className="w-px h-px block ml-1 mt-8"></span>
       <div className="flex items-center gap-3 px-3">
         <span className="flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 w-8 h-8 text-tiny bg-default text-default-foreground rounded-full ring-2 ring-offset-2 ring-offset-background dark:ring-offset-background-dark ring-default flex-none">
-        <Image src={user?.photoURL} alt="avatar" />
+        <Image src={"https://i.ibb.co/0K4MfB3/profile.jpg"} alt="avatar" />
         </span>
         <div className="flex max-w-full flex-col">
         <p className="truncate text-small font-medium text-default-600">{"Hossain Ahmed"}</p>

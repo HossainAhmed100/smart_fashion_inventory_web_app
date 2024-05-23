@@ -3,7 +3,7 @@ import Chart from "react-apexcharts";
 
 const chartConfig = {
     type: "line",
-    height: 240,
+    height: 350,
     series: [
       {
         name: "Sales",
@@ -15,6 +15,11 @@ const chartConfig = {
       },
     ],
     options: {
+      chart: {
+        toolbar: {
+          show: false,
+        },
+      },
       colors: ["#ffe300", "#ffcdff"],
       stroke: {lineCap: "round",curve: "smooth",},
       markers: {size: 0,},

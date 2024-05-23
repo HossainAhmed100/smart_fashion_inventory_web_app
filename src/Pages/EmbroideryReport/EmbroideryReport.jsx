@@ -15,13 +15,13 @@ import {
   Chip,
   Pagination,
 } from "@nextui-org/react";
-import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {capitalize} from "./utils";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import AddNewDataBtn from "../../components/Button/AddNewDataBtn";
 
 const statusColorMap = {
   active: "primary",
@@ -301,7 +301,7 @@ export default function EmbroideryReport() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            
+            <AddNewDataBtn />
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -384,7 +384,7 @@ export default function EmbroideryReport() {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody isLoading={isReportLoading} emptyContent={"No users found"} items={sortedItems}>
+      <TableBody isLoading={isReportLoading} emptyContent={"No Data found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item._id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
