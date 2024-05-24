@@ -1,6 +1,6 @@
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import {Button, Image} from "@nextui-org/react";
-import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
+import { useSignOut } from "react-firebase-hooks/auth";
 import { FaTshirt } from "react-icons/fa";
 import { FaAngleRight, FaBezierCurve, FaArrowRightFromBracket } from "react-icons/fa6";
 import { PiJoystickFill } from "react-icons/pi";
@@ -13,8 +13,6 @@ import auth from "../firebase/firebase.config";
 import Swal from "sweetalert2";
 
 function Main() {
-  const [user] = useAuthState(auth);
-  console.log("🚀 ~ Main ~ user:", user)
   const [signOut] = useSignOut(auth);
   const navigate = useNavigate();
   return (
