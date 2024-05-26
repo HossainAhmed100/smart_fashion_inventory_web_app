@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <HelmetProvider >
           <div className="dark text-foreground bg-background">
             <RouterProvider router={router} />
-            <Toaster />
+            <Toaster position="bottom-right"/>
           </div>
         </HelmetProvider>
       </QueryClientProvider>

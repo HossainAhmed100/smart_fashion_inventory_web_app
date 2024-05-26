@@ -3,13 +3,12 @@ import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
 import "./Dashboard.css";
 import Line from "../../components/Charts/Line";
 import Bar from "../../components/Charts/Bar";
-import Area from "../../components/Charts/Area";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 function Dashboard() {
   const axiosPublic = useAxiosPublic();
-  const {data: reportData = [], isLoading: isReportLoading} = useQuery({
+  const {data: reportData = []} = useQuery({
     queryKey: ["reportData"],
     queryFn: async()=>{
       const res = await axiosPublic.get("/reportData");
@@ -34,7 +33,7 @@ function Dashboard() {
         <div className=" bg-[#ffe300] rounded-3xl gap-4 p-8">
           <div>
           <h1 className="text-lg text-black font-semibold">Total Quantity</h1>
-          <p className="mt-1 text-black">Token representing your tols</p>
+          <p className="mt-1 text-black">Optimize Inventory, Maximize Efficiency</p>
           </div>
           <div className="pt-6">
           <h1 className="text-3xl font-bold text-black">{commaSeparetor(totalQuantity)} Pcs</h1>
@@ -50,10 +49,10 @@ function Dashboard() {
         <div className=" bg-[#ffcdff] rounded-3xl gap-4 p-8">
           <div>
           <h1 className="text-lg text-black font-semibold">Total Rejet</h1>
-          <p className="mt-1 text-black">Token representing your tols</p>
+          <p className="mt-1 text-black">Streamline Your Inventory Management</p>
           </div>
           <div className="pt-6">
-          <h1 className="text-3xl font-bold text-black">{commaSeparetor(totalReject)}</h1>
+          <h1 className="text-3xl font-bold text-black">{commaSeparetor(totalReject)} Pcs</h1>
           <div className="flex items-center justify-start gap-2 pt-4">
           <Chip classNames={{
             base: "bg-white",
@@ -66,10 +65,10 @@ function Dashboard() {
         <div className=" bg-[#e4daff] rounded-3xl gap-4 p-8">
           <div>
           <h1 className="text-lg text-black font-semibold">Total Project</h1>
-          <p className="mt-1 text-black">Token representing your tols</p>
+          <p className="mt-1 text-black">Smart Solutions, Seamless Inventory</p>
           </div>
           <div className="pt-6">
-          <h1 className="text-3xl font-bold text-black">{reportData.length}</h1>
+          <h1 className="text-3xl font-bold text-black">{reportData.length} Pcs</h1>
           <div className="flex items-center justify-start gap-2 pt-4">
           <Chip classNames={{
             base: "bg-white",

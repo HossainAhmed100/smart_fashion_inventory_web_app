@@ -12,6 +12,7 @@ import Register from "../Pages/Register/Register";
 import InsertNewData from "../Pages/InsertNewData/InsertNewData";
 import EditProject from "../Pages/EditProject/EditProject";
 import TagList from "../Pages/TagList/TagList";
+import ExpenseTracker from "../Pages/ExpenseTracker/ExpenseTracker";
 
 export const router = createBrowserRouter([
     {
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
             {
                 path: "/tagList",
                 element: <TagList />
+            },
+            {
+                path: "/expenseTracker",
+                element: <ExpenseTracker />
             },
         ]
     },

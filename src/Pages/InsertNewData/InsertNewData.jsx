@@ -13,9 +13,24 @@ const statusOptions = [
 
 const statusColorMap = {active: "primary",paused: "danger",complete: "success"};
 
-const cuttingNo = [23,67,89,98,76,65,54,43,32,25,78,45];
-const designName = ["J.G Embo", "Form Fushion", "Bold Brush", "Palette Pro", "Mint K.P"];
-const styleName = ["Polo Shirt", "Jins", "Smart Shirt", "Easy Cap", "Fine Mate"];
+const cuttingNo = [23, 156, 78, 245, 187, 65, 274];
+const designName = [
+  "Ethereal Elegance",
+  "Urban Chic",
+  "Vintage Vogue",
+  "Street Style",
+  "Glamour Grace",
+  "Timeless Trends",
+  "Avant-Garde Attire"
+];
+const styleName = [
+  "Boho Chic",
+  "Casual Cool",
+  "Urban Edge",
+  "Vintage Glam",
+  "Streetwear",
+  "Eclectic Fusion"
+];
 
 function InsertNewData() {
   const { register, handleSubmit, control, formState: { errors } } = useForm();
