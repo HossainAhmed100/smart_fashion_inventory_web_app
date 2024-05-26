@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
         <HelmetProvider >
-          <div >
+          <div className="dark text-foreground bg-background">
             <RouterProvider router={router} />
           </div>
         </HelmetProvider>

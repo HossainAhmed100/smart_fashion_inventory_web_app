@@ -11,6 +11,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import InsertNewData from "../Pages/InsertNewData/InsertNewData";
 import EditProject from "../Pages/EditProject/EditProject";
+import TagList from "../Pages/TagList/TagList";
 
 export const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
             {
                 path: "/editProject",
                 element: <EditProject />
+            },
+            {
+                path: "/tagList",
+                element: <TagList />
             },
         ]
     },

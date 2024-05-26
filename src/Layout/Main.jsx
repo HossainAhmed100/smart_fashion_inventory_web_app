@@ -2,7 +2,7 @@ import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import {Button, Image} from "@nextui-org/react";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { FaTshirt } from "react-icons/fa";
-import { FaAngleRight, FaBezierCurve, FaArrowRightFromBracket } from "react-icons/fa6";
+import { FaAngleRight, FaBezierCurve, FaArrowRightFromBracket, FaHashtag } from "react-icons/fa6";
 import { PiJoystickFill } from "react-icons/pi";
 import { IoIosCut } from "react-icons/io";
 import { GiSewingMachine } from "react-icons/gi";
@@ -40,9 +40,9 @@ function Main() {
       </div>
       <div className="overflow-y-auto -mr-6 h-full py-6 pr-6" data-orientation="vertical" data-top-scroll="false" data-bottom-scroll="true">
         <div data-slot="base" className="w-full relative flex flex-col gap-1 p-1 list-none">
-          <nav data-slot="list" className="w-full flex flex-col gap-0.5 outline-none items-center scrollbar-none	 scrollbar-track-slate-300 h-32	">
-          <li data-slot="base" role="presentation" className="relative mb-2 w-full">
-            <span className="pl-1 text-tiny text-foreground-500" data-slot="heading">Overview</span>
+          <nav data-slot="list" className="w-full flex flex-col gap-0.5 outline-none items-center h-32	">
+          <li className="relative mb-2 w-full">
+            <span className="pl-1 text-tiny text-foreground-500" data-slot="heading">Pages</span>
             <ul className="mt-2 space-y-1">
               <li>
               <NavLink
@@ -146,6 +146,29 @@ function Main() {
               <div className="flex items-center justify-center gap-2">
               <FaTasks size={18} color={isActive ? "white" : "#a1a1aa"}/>
               <span className={`flex-1 ml-1 truncate text-small font-medium ${isActive ? "white" : "text-default-500"} group-data-[selected=true]:text-foreground`} data-slot="heading">Finishing Report</span>
+              </div>
+              <FaAngleRight size={13} color={isActive ? "white" : "#a1a1aa"}/>
+              </>
+              )}
+            </NavLink>
+              </li>
+            </ul>
+          </li>
+          <li className="relative mb-2 w-full">
+            <span className="pl-1 text-tiny text-foreground-500" data-slot="heading">Inventory</span>
+            <ul className="mt-2 space-y-1">
+              <li>
+              <NavLink
+              to="/tagList"
+              className={({ isActive }) =>
+                `flex group gap-2 items-center justify-between relative py-1.5 w-full cursor-pointer outline-none px-3 min-h-11 rounded-large h-[44px] hover:bg-default-50 duration-300 ease-in-out ${
+                  isActive ? 'bg-default-50 text-white' : 'bg-transparent text-white'
+                }`}>
+              {({ isActive }) => (
+              <>
+              <div className="flex items-center justify-center gap-2">
+              <FaHashtag size={18} color={isActive ? "white" : "#a1a1aa"}/>
+              <span className={`flex-1 ml-1 truncate text-small font-medium ${isActive ? "white" : "text-default-500"} group-data-[selected=true]:text-foreground`} data-slot="heading">Tag List</span>
               </div>
               <FaAngleRight size={13} color={isActive ? "white" : "#a1a1aa"}/>
               </>
