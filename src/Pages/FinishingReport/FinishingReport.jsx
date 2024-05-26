@@ -90,8 +90,8 @@ export default function FinishingReport() {
       );
     }
     if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-      filteredreportData = filteredreportData.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
+      filteredreportData = filteredreportData.filter((item) =>
+        Array.from(statusFilter).includes(item.finising_status),
       );
     }
 
@@ -100,8 +100,8 @@ export default function FinishingReport() {
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
   
-  const totalCost = (rate, quantity) => {
-    const totalPrice = quantity * parseInt(rate);
+  const totalCost = (finising_rate, quantity) => {
+    const totalPrice = quantity * parseInt(finising_rate);
     const options = {  maximumFractionDigits: 2 };
     const total = Intl.NumberFormat("en-US",options).format(totalPrice);
     const result = total;
@@ -109,13 +109,14 @@ export default function FinishingReport() {
   }
 
   const totalReject = (sewing_reject, printing_reject, embrodery_reject)=>{
-    const total = sewing_reject +printing_reject +embrodery_reject;
+    const rejectQuantity = [sewing_reject, printing_reject, embrodery_reject];
+    const total = rejectQuantity.reduce((quantity, current) => quantity + parseFloat(current), 0);
     return total;
   }
 
-  const totalCostPerPcs = (sewing_rate, printing_rate, embrodery_rate, sewing_accessoriesCost, rate)=>{
-    const num = [sewing_rate, printing_rate, embrodery_rate, sewing_accessoriesCost, rate];
-    const sum = num.reduce((acc, current) => acc + parseFloat(current), 0);
+  const totalCostPerPcs = (sewing_rate, printing_rate, embrodery_rate, sewing_accessoriesCost, finising_rate)=>{
+    const num = [sewing_rate, printing_rate, embrodery_rate, sewing_accessoriesCost, finising_rate];
+    const sum = num.reduce((rate, current) => rate + parseFloat(current), 0);
     console.log(sum)
     return sum;
   }
@@ -198,13 +199,13 @@ export default function FinishingReport() {
       case "total":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">Tk. {totalCost(item.rate, item.quantityPcs)}</p>
+            <p className="text-bold text-small capitalize">Tk. {totalCost(item.finising_rate, item.quantityPcs)}</p>
           </div>
         );
       case "totalCostPerPcs":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">Tk. {totalCostPerPcs(item?.sewing_rate, item?.printing_rate, item?.embrodery_rate, item?.sewing_accessoriesCost, item?.rate)}</p>
+            <p className="text-bold text-small capitalize">Tk. {totalCostPerPcs(item?.sewing_rate, item?.printing_rate, item?.embrodery_rate, item?.sewing_accessoriesCost, item?.finising_rate)}</p>
           </div>
         );
       case "finising_status":
