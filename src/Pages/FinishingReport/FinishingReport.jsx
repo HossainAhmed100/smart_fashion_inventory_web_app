@@ -38,7 +38,7 @@ const columns = [
   {name: "DESCRIPTION", uid: "description"},
   {name: "QUANTITY", uid: "quantityPcs", sortable: true},
   {name: "TOTAL REJECT", uid: "totalReject", sortable: true},
-  {name: "RATE", uid: "rate", sortable: true},
+  {name: "RATE", uid: "finising_rate", sortable: true},
   {name: "TOTAL", uid: "total", sortable: true},
   {name: "TOTAL COST (Pcs)", uid: "totalCostPerPcs", sortable: true},
   {name: "STATUS", uid: "finising_status"},
@@ -189,7 +189,7 @@ export default function FinishingReport() {
             <p className="text-bold text-small capitalize">{totalReject(item?.sewing_reject, item?.printing_reject, item?.embrodery_reject)} Pcs</p>
           </div>
         );
-      case "rate":
+      case "finising_rate":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">Tk. {cellValue}</p>
