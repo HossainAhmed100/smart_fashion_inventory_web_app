@@ -13,22 +13,21 @@ import {
   DropdownMenu,
   DropdownItem,
   Chip,
-  Pagination,
+  Pagination
 } from "@nextui-org/react";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {capitalize} from "./utils";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import AddNewDataBtn from "../../components/Button/AddNewDataBtn";
+import DateRangePicker from "../../components/Modal/DateRangePicker";
 
 const statusColorMap = {paid: "success", due: "danger"};
 
 const columns = [
   {name: "EXPENSE ID", uid: "itemNo"},
   {name: "EXPENSE DATE", uid: "expense_date"},
-  {name: "Factory NAME", uid: "expense_factoryName"},
+  {name: "EXPENSE FACTORY NAME", uid: "expense_factoryName"},
   {name: "EXPENSE DESCRIPTION", uid: "expense_desceiption"},
   {name: "PAYMENT STATUS", uid: "expense_status"},
   {name: "EXPENSE AMOUNT", uid: "expense_amount", sortable: true},
@@ -217,6 +216,7 @@ export default function ExpenseTracker() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
+            <DateRangePicker />
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
