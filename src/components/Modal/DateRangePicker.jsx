@@ -9,19 +9,42 @@ export default function DateRangePicker() {
   return (
     <>
       <Button variant="flat" isIconOnly onPress={onOpen}><MdOutlineCalendarMonth size={20}/></Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+      motionProps={{
+        variants: {
+          enter: {
+            y: 0,
+            opacity: 1,
+            transition: {
+              duration: 0.3,
+              ease: "easeOut",
+            },
+          },
+          exit: {
+            y: -20,
+            opacity: 0,
+            transition: {
+              duration: 0.2,
+              ease: "easeIn",
+            },
+          },
+        }
+      }}
+      hideCloseButton	={false}
+      classNames={{
+        body: "py-6",
+        backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+        base: "border-[#292f46] w-80 bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
+        header: "border-b-[1px] border-[#292f46]",
+        footer: "border-t-[1px] border-[#292f46]",
+        closeButton: "hover:bg-white/5 active:bg-white/10",
+      }}
+      isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
-              <ModalBody>
-              <RangeCalendar
-                aria-label="Date (Uncontrolled)"
-                defaultValue={{
-                  start: today(getLocalTimeZone()),
-                  end: today(getLocalTimeZone()).add({weeks: 1}),
-                }}
-              />
+              <ModalBody className="w-72 m-auto">
+              <RangeCalendar aria-label="Date (No Selection)" />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
