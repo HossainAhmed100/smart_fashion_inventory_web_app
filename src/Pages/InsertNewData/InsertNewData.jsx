@@ -21,7 +21,8 @@ const designName = [
   "Street Style",
   "Glamour Grace",
   "Timeless Trends",
-  "Avant-Garde Attire"
+  "Avant-Garde Attire",
+  "J.G Embo"
 ];
 const styleName = [
   "Boho Chic",
@@ -132,7 +133,7 @@ function InsertNewData() {
           labelPlacement="outside" 
           placeholder="Style Name" 
           variant={"bordered"} 
-          defaultSelectedKeys={["Polo Shirt"]}
+          defaultSelectedKeys={["Streetwear"]}
           {...register("styleName", {required: true})}
           label="Select Style Name.">
           {styleName.map((item) => <SelectItem key={item} textValue={item} value={item}>{item}</SelectItem>)}

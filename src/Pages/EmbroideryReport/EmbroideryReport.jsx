@@ -14,8 +14,8 @@ import {
   DropdownItem,
   Chip,
   Pagination,
+  Tooltip,
 } from "@nextui-org/react";
-import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {capitalize} from "./utils";
@@ -23,6 +23,10 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import AddNewDataBtn from "../../components/Button/AddNewDataBtn";
 import DateRangePicker from "../../components/Modal/DateRangePicker";
+import { Link } from "react-router-dom";
+import { LuEye } from "react-icons/lu";
+import { BiEditAlt } from "react-icons/bi";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 const statusColorMap = {
   active: "primary",
@@ -195,19 +199,22 @@ export default function EmbroideryReport() {
         );
       case "actions":
         return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem aria-label="view">View</DropdownItem>
-                <DropdownItem aria-label="edit">Edit</DropdownItem>
-                <DropdownItem aria-label="delete">Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+          <div className="relative flex items-center gap-2">
+            <Tooltip content="Details">
+              <Link to={`/viewSingleReport/${item?._id}`} className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <LuEye />
+              </Link>
+            </Tooltip>
+            <Tooltip content="Edit user">
+              <Link to={`/editProject/${item?._id}`} className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <BiEditAlt />
+              </Link>
+            </Tooltip>
+            <Tooltip color="danger" content="Delete user">
+              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                <RiDeleteBinLine />
+              </span>
+            </Tooltip>
           </div>
         );
       default:

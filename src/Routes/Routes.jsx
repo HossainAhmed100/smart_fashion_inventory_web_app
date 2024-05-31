@@ -13,6 +13,7 @@ import InsertNewData from "../Pages/InsertNewData/InsertNewData";
 import EditProject from "../Pages/EditProject/EditProject";
 import TagList from "../Pages/TagList/TagList";
 import ExpenseTracker from "../Pages/ExpenseTracker/ExpenseTracker";
+import ViewSingleReport from "../Pages/ViewSingleReport/ViewSingleReport";
 
 export const router = createBrowserRouter([
     {
@@ -48,8 +49,14 @@ export const router = createBrowserRouter([
                 element: <InsertNewData />
             },
             {
-                path: "/editProject",
-                element: <EditProject />
+                path: "/editProject/:id",
+                element: <EditProject />,
+                loader: ({params}) => fetch(`http://localhost:5000/singleReportData/${params.id}`)
+            },
+            {
+                path: "/viewSingleReport/:id",
+                element: <ViewSingleReport />,
+                loader: ({params}) => fetch(`http://localhost:5000/singleReportData/${params.id}`)
             },
             {
                 path: "/tagList",

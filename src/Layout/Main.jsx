@@ -16,7 +16,7 @@ function Main() {
   const [signOut] = useSignOut(auth);
   const navigate = useNavigate();
   return (
-    <div className="flex w-full">
+    <div className="flex w-full dark text-foreground bg-background">
       <div className="w-72">
       <div className="mainSidebar !border-r-small  border-divider flex-col flex w-full transition-width p-6">
       <div className="flex items-center gap-3 px-3">
