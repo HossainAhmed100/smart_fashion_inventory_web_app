@@ -35,8 +35,7 @@ const styleName = [
 ];
 
 function EditProject() {
-  // const loaderData = useLoaderData();
-  // console.log("🚀 ~ EditProject ~ loaderData:", loaderData)
+  const loaderData = useLoaderData();
   const { register, handleSubmit, control, formState: { errors } } = useForm();
   const axiosPublic = useAxiosPublic();
   const onSubmit = async (data) => {
@@ -113,7 +112,7 @@ function EditProject() {
           placeholder="0" 
           variant={"bordered"} 
           {...register("cuttingNo", {required: true})}
-          defaultSelectedKeys={[23]}
+          defaultSelectedKeys={[loaderData?.cuttingNo]}
           label="Select Cutting No.">
           {cuttingNo.map((item) => (
           <SelectItem key={item} textValue={item} value={item}
@@ -126,7 +125,7 @@ function EditProject() {
           labelPlacement="outside" 
           placeholder="Design Name" 
           variant={"bordered"} 
-          defaultSelectedKeys={["J.G Embo"]}
+          defaultSelectedKeys={[loaderData?.designName]}
           {...register("designName", {required: true})}
           label="Select Design Name.">
           {designName.map((item) => <SelectItem key={item} textValue={item} value={item}>{item}</SelectItem>)}
@@ -136,7 +135,7 @@ function EditProject() {
           labelPlacement="outside" 
           placeholder="Style Name" 
           variant={"bordered"} 
-          defaultSelectedKeys={["Streetwear"]}
+          defaultSelectedKeys={[loaderData?.styleName]}
           {...register("styleName", {required: true})}
           label="Select Style Name.">
           {styleName.map((item) => <SelectItem key={item} textValue={item} value={item}>{item}</SelectItem>)}
@@ -147,6 +146,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="Pcs"
+            defaultValue={loaderData?.quantityPcs}
             {...register("quantityPcs", {required: true})}
             isInvalid={errors.quantityPcs ? true : false}
             errorMessage={errors.quantityPcs ? "Enter Quantity" : ""}
@@ -174,7 +174,7 @@ function EditProject() {
           placeholder="Active" 
           variant={"bordered"} 
           {...register("cutting_status")}
-          defaultSelectedKeys={["active"]}
+          defaultSelectedKeys={[loaderData?.cutting_status]}
           label="Cutting Status">
           {statusOptions.map((item) => (
           <SelectItem key={item.uid} textValue={item.name} value={item.uid}>
@@ -188,6 +188,7 @@ function EditProject() {
             labelPlacement="outside"
             placeholder="0.0 Tk"
             inputMode="decimal"
+            defaultValue={loaderData?.cutting_rate}
             {...register("cutting_rate", {required: true})}
             isInvalid={errors.cutting_rate ? true : false}
             errorMessage={errors.cutting_rate ? "Enter Cutting Rate" : ""}
@@ -198,7 +199,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="0 KG"
-            inputMode="decimal"
+            defaultValue={loaderData?.cutting_fabricsWeight}
             {...register("cutting_fabricsWeight", {required: true})}
             isInvalid={errors.cutting_fabricsWeight ? true : false}
             errorMessage={errors.cutting_fabricsWeight ? "Enter Fabrics Weight" : ""}
@@ -209,7 +210,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="0.0 Tk"
-            inputMode="decimal"
+            defaultValue={loaderData?.cutting_fabricsRate}
             {...register("cutting_fabricsRate", {required: true})}
             isInvalid={errors.cutting_fabricsRate ? true : false}
             errorMessage={errors.cutting_fabricsRate ? "Enter Fabrics Cutting Rate" : ""}
@@ -236,7 +237,7 @@ function EditProject() {
           labelPlacement="outside"
           variant={"bordered"} 
           {...register("embrodery_status")}
-          defaultSelectedKeys={["paused"]}
+          defaultSelectedKeys={[loaderData?.embrodery_status]}
           label="Embrodery Status">
           {statusOptions.map((item) => (
           <SelectItem key={item.uid} textValue={item.name} value={item.uid}>
@@ -249,7 +250,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="0.0 Tk"
-            inputMode="decimal"
+            defaultValue={loaderData?.embrodery_rate}
             {...register("embrodery_rate", {required: true})}
             isInvalid={errors.embrodery_rate ? true : false}
             errorMessage={errors.embrodery_rate ? "Enter Embrodery Rate" : ""}
@@ -260,6 +261,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="0 Pcs"
+            defaultValue={loaderData?.embrodery_reject}
             {...register("embrodery_reject", {required: true})}
             isInvalid={errors.embrodery_reject ? true : false}
             errorMessage={errors.embrodery_reject ? "Enter Reject Quantity" : ""}
@@ -270,7 +272,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="10k"
-            defaultValue="10k"
+            defaultValue={loaderData?.embrodery_desceiption}
             {...register("embrodery_desceiption")}
           />
           </div>
@@ -296,7 +298,7 @@ function EditProject() {
           placeholder="Active" 
           variant={"bordered"} 
           {...register("printing_status")}
-          defaultSelectedKeys={["complete"]}
+          defaultSelectedKeys={[loaderData?.printing_status]}
           label="Printing Status">
           {statusOptions.map((item) => (
           <SelectItem key={item.uid} textValue={item.name} value={item.uid}>
@@ -309,7 +311,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="0.0 Tk"
-            inputMode="decimal"
+            defaultValue={loaderData?.printing_rate}
             {...register("printing_rate", {required: true})}
             isInvalid={errors.printing_rate ? true : false}
             errorMessage={errors.printing_rate ? "Enter Printing Rate" : ""}
@@ -320,6 +322,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="0 Pcs"
+            defaultValue={loaderData?.printing_reject}
             {...register("printing_reject", {required: true})}
             isInvalid={errors.printing_reject ? true : false}
             errorMessage={errors.printing_reject ? "Enter Reject Quantity" : ""}
@@ -330,7 +333,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="Write.."
-            defaultValue="---"
+            defaultValue={loaderData?.printing_desceiption}
             {...register("printing_desceiption")}
           />
           </div>
@@ -356,7 +359,7 @@ function EditProject() {
           placeholder="Active" 
           variant={"bordered"} 
           {...register("sewing_status")}
-          defaultSelectedKeys={["active"]}
+          defaultSelectedKeys={[loaderData?.sewing_status]}
           label="Sewing Status">
           {statusOptions.map((item) => (
           <SelectItem key={item.uid} textValue={item.name} value={item.uid}>
@@ -369,7 +372,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="0.0 Tk"
-            inputMode="decimal"
+            defaultValue={loaderData?.sewing_rate}
             {...register("sewing_rate", {required: true})}
             isInvalid={errors.sewing_rate ? true : false}
             errorMessage={errors.sewing_rate ? "Enter Sewing Rate" : ""}
@@ -380,7 +383,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="0.0 Tk"
-            inputMode="decimal"
+            defaultValue={loaderData?.sewing_accessoriesCost}
             {...register("sewing_accessoriesCost", {required: true})}
             isInvalid={errors.sewing_accessoriesCost ? true : false}
             errorMessage={errors.sewing_accessoriesCost ? "Enter Sewing Acc Cost" : ""}
@@ -391,6 +394,7 @@ function EditProject() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="0 Pcs"
+            defaultValue={loaderData?.sewing_reject}
             {...register("sewing_reject", {required: true})}
             isInvalid={errors.sewing_reject ? true : false}
             errorMessage={errors.sewing_reject ? "Enter Reject Quantity" : ""}
@@ -418,7 +422,7 @@ function EditProject() {
           placeholder="Active" 
           variant={"bordered"} 
           {...register("finising_status")}
-          defaultSelectedKeys={["active"]}
+          defaultSelectedKeys={[loaderData?.finising_status]}
           label="Finising Status">
           {statusOptions.map((item) => (
           <SelectItem key={item.uid} textValue={item.name} value={item.uid}>
@@ -439,7 +443,7 @@ function EditProject() {
             label="Description"
             variant="bordered"
             labelPlacement="outside"
-            defaultValue="---"
+            defaultValue={loaderData?.description}
             placeholder="Write..."
             {...register("description")}
           />
@@ -450,6 +454,7 @@ function EditProject() {
             labelPlacement="outside"
             placeholder="0.0 Tk"
             inputMode="decimal"
+            defaultValue={loaderData?.finising_rate}
             {...register("finising_rate", {required: true})}
             isInvalid={errors.cutting_fabricsRate ? true : false}
             errorMessage={errors.cutting_fabricsRate ? "Enter Finishing Rate" : ""}
