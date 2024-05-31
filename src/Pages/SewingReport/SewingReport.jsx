@@ -22,6 +22,7 @@ import {capitalize} from "./utils";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import AddNewDataBtn from "../../components/Button/AddNewDataBtn";
+import DateRangePicker from "../../components/Modal/DateRangePicker";
 
 const statusColorMap = {
   active: "primary",
@@ -265,6 +266,7 @@ export default function SewingReport() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
+            <DateRangePicker />
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
