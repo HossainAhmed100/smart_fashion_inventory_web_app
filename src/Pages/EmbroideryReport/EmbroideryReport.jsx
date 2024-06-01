@@ -27,6 +27,7 @@ import { Link } from "react-router-dom";
 import { LuEye } from "react-icons/lu";
 import { BiEditAlt } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
+import Swal from "sweetalert2";
 
 const statusColorMap = {
   active: "primary",
@@ -60,7 +61,6 @@ const INITIAL_VISIBLE_COLUMNS = ["itemNo", "embrodery_date", "styleName", "cutti
 
 export default function EmbroideryReport() {
   const [filterValue, setFilterValue] = React.useState("");
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -70,13 +70,40 @@ export default function EmbroideryReport() {
 
   const hasSearchFilter = Boolean(filterValue);
 
-  const {data: reportData = [], isLoading: isReportLoading} = useQuery({
+  const {data: reportData = [], isLoading: isReportLoading, refetch} = useQuery({
     queryKey: ["reportData"],
     queryFn: async()=>{
       const res = await axiosPublic.get("/reportData");
       return res.data;
     }
   })
+
+
+  const handleDeleteReport = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes delete it!"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axiosPublic.delete(`/reportData/${id}`);
+        console.log("🚀 ~ handleDelete ~ res:", res.data)
+        if(res.data.deletedCount > 0){
+          refetch()
+          Swal.fire({
+            icon: "success",
+            title: "Item Deleted Successully!.",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      }
+    });
+  }
 
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
@@ -205,13 +232,13 @@ export default function EmbroideryReport() {
                 <LuEye />
               </Link>
             </Tooltip>
-            <Tooltip content="Edit user">
+            <Tooltip content="Edit">
               <Link to={`/editProject/${item?._id}`} className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <BiEditAlt />
               </Link>
             </Tooltip>
-            <Tooltip color="danger" content="Delete user">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+            <Tooltip color="danger" content="Delete">
+              <span onClick={() => handleDeleteReport(item?._id)} className="text-lg text-danger cursor-pointer active:opacity-50">
                 <RiDeleteBinLine />
               </span>
             </Tooltip>
@@ -342,11 +369,6 @@ export default function EmbroideryReport() {
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">
-          {selectedKeys === "all"
-            ? "All items selected"
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span>
         <Pagination
           isCompact
           showControls
@@ -366,7 +388,7 @@ export default function EmbroideryReport() {
         </div>
       </div>
     );
-  }, [selectedKeys, page, onPreviousPage, onNextPage, pages, filteredItems.length]);
+  }, [page, onPreviousPage, onNextPage, pages]);
 
   return (
     <Table
@@ -374,12 +396,9 @@ export default function EmbroideryReport() {
       isHeaderSticky
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
-      selectedKeys={selectedKeys}
-      selectionMode="multiple"
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
       onSortChange={setSortDescriptor}
     >
       <TableHeader columns={headerColumns}>

@@ -72,24 +72,23 @@ function EditProject() {
     const sewing_accessoriesCost = data.sewing_accessoriesCost;
 
 
-    const invoiceData = {finising_rate, entry_date, quantityPcs, description, details, designName, finising_date, finising_status, styleName, cuttingNo, cutting_date, cutting_status, cutting_rate, cutting_fabricsWeight, cutting_fabricsRate, embrodery_rate, embrodery_reject, embrodery_date, embrodery_status, embrodery_desceiption, printing_desceiption, printing_rate, printing_reject, printing_date, printing_status, sewing_rate, sewing_reject, sewing_date, sewing_status, sewing_accessoriesCost};
+    const projectData = {finising_rate, entry_date, quantityPcs, description, details, designName, finising_date, finising_status, styleName, cuttingNo, cutting_date, cutting_status, cutting_rate, cutting_fabricsWeight, cutting_fabricsRate, embrodery_rate, embrodery_reject, embrodery_date, embrodery_status, embrodery_desceiption, printing_desceiption, printing_rate, printing_reject, printing_date, printing_status, sewing_rate, sewing_reject, sewing_date, sewing_status, sewing_accessoriesCost};
     try {
-      const response = await axiosPublic.post('/reportData', invoiceData);
-      console.log('Invoice saved:', response.data);
-      if(response.data.insertedId){
+      const response = await axiosPublic.patch(`/reportData/${loaderData?._id}`, projectData);
+      if(response.data.modifiedCount){
         Swal.fire({
           icon: "success",
-          title: "project Added Successfully.",
+          title: "Project Updated Successfully.",
         });
       }
   } catch (error) {
-      console.error('There was an error saving the invoice:', error);
+      console.error('There was an error updating the Project:', error);
   }
   };
   let localDate = today(getLocalTimeZone());
   return (
     <div>
-      <Helmet title='Add New Project | Mayer Doa Inventory'/>
+      <Helmet title='Update Project | Mayer Doa Inventory'/>
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <div>
           {/* <h3 className="text-base text-foreground-500">General Details</h3> */}

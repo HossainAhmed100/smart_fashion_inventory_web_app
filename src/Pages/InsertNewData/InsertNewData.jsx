@@ -267,7 +267,7 @@ function InsertNewData() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="10k"
-            defaultValue="10k"
+            defaultValue="N/A"
             {...register("embrodery_desceiption")}
           />
           </div>
@@ -327,7 +327,7 @@ function InsertNewData() {
             variant="bordered"
             labelPlacement="outside"
             placeholder="Write.."
-            defaultValue="---"
+            defaultValue="N/A"
             {...register("printing_desceiption")}
           />
           </div>

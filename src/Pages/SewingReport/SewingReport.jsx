@@ -52,7 +52,7 @@ const statusOptions = [
   {name: "Complete", uid: "complete"},
 ];
 
-const INITIAL_VISIBLE_COLUMNS = ["itemNo","sewing_date", "cuttingNo", "styleName", "quantityPcs", "sewing_reject", "sewing_rate", "sewing_accessoriesCost", "total", "sewing_status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["itemNo","sewing_date", "cuttingNo", "quantityPcs", "sewing_reject", "sewing_rate", "sewing_accessoriesCost", "total", "sewing_status", "actions"];
 
 export default function SewingReport() {
   const [filterValue, setFilterValue] = React.useState("");

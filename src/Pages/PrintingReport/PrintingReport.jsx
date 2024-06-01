@@ -52,7 +52,7 @@ const statusOptions = [
   {name: "Complete", uid: "complete"},
 ];
 
-const INITIAL_VISIBLE_COLUMNS = ["itemNo", "printing_date", "styleName", "designName", "details", "cuttingNo", "quantityPcs", "printing_reject", "printing_rate", "total", "printing_status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["itemNo", "printing_date", "styleName", "designName", "cuttingNo", "quantityPcs", "printing_reject", "printing_rate", "total", "printing_status", "actions"];
 
 export default function PrintingReport() {
   const [filterValue, setFilterValue] = React.useState("");
