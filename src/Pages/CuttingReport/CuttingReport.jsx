@@ -14,8 +14,8 @@ import {
   DropdownItem,
   Chip,
   Pagination,
+  Tooltip,
 } from "@nextui-org/react";
-import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {capitalize} from "./utils";
@@ -23,6 +23,11 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import AddNewDataBtn from "../../components/Button/AddNewDataBtn";
 import DateRangePicker from "../../components/Modal/DateRangePicker";
+import useDeleteReport from "../../hooks/useDeleteReport";
+import { Link } from "react-router-dom";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { LuEye } from "react-icons/lu";
+import { BiEditAlt } from "react-icons/bi";
 
 const statusColorMap = {
   active: "primary",
@@ -54,11 +59,10 @@ const statusOptions = [
   {name: "Complete", uid: "complete"},
 ];
 
-const INITIAL_VISIBLE_COLUMNS = ["itemNo", "cutting_rate", "total", "cutting_fabricsWeight", "cutting_fabricsRate", "fabricsCostPerPcs", "totalCostPerUnit", "cutting_status"];
+const INITIAL_VISIBLE_COLUMNS = ["itemNo", "cutting_rate", "total", "cutting_fabricsWeight", "cutting_fabricsRate", "fabricsCostPerPcs", "totalCostPerUnit", "cutting_status", "actions"];
 
 export default function CuttingReport() {
   const [filterValue, setFilterValue] = useState("");
-  const [selectedKeys, setSelectedKeys] = useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = useState(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = useState("all");
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -66,14 +70,14 @@ export default function CuttingReport() {
   const [sortDescriptor, setSortDescriptor] = useState({column: "quantityPcs",direction: "ascending",});
   const [page, setPage] = useState(1);
 
-  const {data: reportData = [], isLoading: isReportLoading} = useQuery({
+  const {data: reportData = [], isLoading: isReportLoading, refetch} = useQuery({
     queryKey: ["reportData"],
     queryFn: async()=>{
       const res = await axiosPublic.get("/reportData");
       return res.data;
     }
   })
-
+  const handleDeleteReport = useDeleteReport(refetch);
   const hasSearchFilter = Boolean(filterValue);
 
   const headerColumns = useMemo(() => {
@@ -231,19 +235,22 @@ export default function CuttingReport() {
         );
       case "actions":
         return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light" aria-label="More options">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+          <div className="relative flex items-center gap-2">
+            <Tooltip content="Details">
+              <Link to={`/viewSingleReport/${item?._id}`} className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <LuEye />
+              </Link>
+            </Tooltip>
+            <Tooltip content="Edit">
+              <Link to={`/editProject/${item?._id}`} className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <BiEditAlt />
+              </Link>
+            </Tooltip>
+            <Tooltip color="danger" content="Delete">
+              <span onClick={() => handleDeleteReport(item?._id)} className="text-lg text-danger cursor-pointer active:opacity-50">
+                <RiDeleteBinLine />
+              </span>
+            </Tooltip>
           </div>
         );
       default:
@@ -371,11 +378,6 @@ export default function CuttingReport() {
   const bottomContent = useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">
-          {selectedKeys === "all"
-            ? "All items selected"
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span>
         <Pagination
           isCompact
           showControls
@@ -395,21 +397,18 @@ export default function CuttingReport() {
         </div>
       </div>
     );
-  }, [selectedKeys, page, onPreviousPage, onNextPage, pages, filteredItems.length]);
+  }, [page, onPreviousPage, onNextPage, pages]);
 
   return (
     <Table
-      aria-label="Example table with custom cells, pagination and sorting"
-      isHeaderSticky
-      bottomContent={bottomContent}
-      bottomContentPlacement="outside"
-      selectedKeys={selectedKeys}
-      selectionMode="multiple"
-      sortDescriptor={sortDescriptor}
-      topContent={topContent}
-      topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
-      onSortChange={setSortDescriptor}
+    aria-label="Example table with custom cells, pagination and sorting"
+    isHeaderSticky
+    bottomContent={bottomContent}
+    bottomContentPlacement="outside"
+    sortDescriptor={sortDescriptor}
+    topContent={topContent}
+    topContentPlacement="outside"
+    onSortChange={setSortDescriptor}
     >
       <TableHeader columns={headerColumns}>
         {(column) => (

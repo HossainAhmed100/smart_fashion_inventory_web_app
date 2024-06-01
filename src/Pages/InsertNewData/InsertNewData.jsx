@@ -436,7 +436,7 @@ function InsertNewData() {
             label="Description"
             variant="bordered"
             labelPlacement="outside"
-            defaultValue="---"
+            defaultValue="N/A"
             placeholder="Write..."
             {...register("description")}
           />

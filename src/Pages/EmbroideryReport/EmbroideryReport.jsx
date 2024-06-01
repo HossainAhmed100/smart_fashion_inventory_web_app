@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
 import { LuEye } from "react-icons/lu";
 import { BiEditAlt } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
-import Swal from "sweetalert2";
+import useDeleteReport from "../../hooks/useDeleteReport";
 
 const statusColorMap = {
   active: "primary",
@@ -67,9 +67,7 @@ export default function EmbroideryReport() {
   const axiosPublic = useAxiosPublic();
   const [sortDescriptor, setSortDescriptor] = React.useState({column: "quantityPcs",direction: "ascending",});
   const [page, setPage] = React.useState(1);
-
   const hasSearchFilter = Boolean(filterValue);
-
   const {data: reportData = [], isLoading: isReportLoading, refetch} = useQuery({
     queryKey: ["reportData"],
     queryFn: async()=>{
@@ -77,34 +75,7 @@ export default function EmbroideryReport() {
       return res.data;
     }
   })
-
-
-  const handleDeleteReport = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes delete it!"
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        const res = await axiosPublic.delete(`/reportData/${id}`);
-        console.log("🚀 ~ handleDelete ~ res:", res.data)
-        if(res.data.deletedCount > 0){
-          refetch()
-          Swal.fire({
-            icon: "success",
-            title: "Item Deleted Successully!.",
-            showConfirmButton: false,
-            timer: 1500
-          });
-        }
-      }
-    });
-  }
-
+  const handleDeleteReport = useDeleteReport(refetch);
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
 
