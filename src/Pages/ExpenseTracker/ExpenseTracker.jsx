@@ -13,9 +13,9 @@ import {
   DropdownMenu,
   DropdownItem,
   Chip,
-  Pagination
+  Pagination,
+  Tooltip
 } from "@nextui-org/react";
-import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {capitalize} from "./utils";
@@ -23,6 +23,9 @@ import { FiPlus } from "react-icons/fi";
 import DateRangePicker from "../../components/Modal/DateRangePicker";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { LuEye } from "react-icons/lu";
+import { BiEditAlt } from "react-icons/bi";
 
 const statusColorMap = {paid: "success", due: "danger"};
 
@@ -136,7 +139,6 @@ const reportData = [
 
 export default function ExpenseTracker() {
   const [filterValue, setFilterValue] = React.useState("");
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -165,7 +167,7 @@ export default function ExpenseTracker() {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((data) =>
-        data.styleName.toLowerCase().includes(filterValue.toLowerCase()),
+        data.expense_factoryName.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
@@ -176,6 +178,14 @@ export default function ExpenseTracker() {
 
     return filteredUsers;
   }, [hasSearchFilter, filterValue, statusFilter]);
+
+  const handleActins = () => {
+    Swal.fire({
+      title: "Notice",
+      text: "This Project is under Development!",
+      icon: "info"
+    });
+  }
 
   const addNewExpense = () => {
     Swal.fire({
@@ -233,20 +243,23 @@ export default function ExpenseTracker() {
         );
       case "actions":
         return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem aria-label="view">View</DropdownItem>
-                <DropdownItem aria-label="edit">Edit</DropdownItem>
-                <DropdownItem aria-label="delete">Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
+          <div className="relative flex items-center gap-2">
+          <Tooltip content="Details">
+            <span onClick={handleActins} className="text-lg text-default-400 cursor-pointer active:opacity-50">
+              <LuEye />
+            </span>
+          </Tooltip>
+          <Tooltip content="Edit">
+            <span onClick={handleActins} className="text-lg text-default-400 cursor-pointer active:opacity-50">
+              <BiEditAlt />
+            </span>
+          </Tooltip>
+          <Tooltip color="danger" content="Delete">
+            <span onClick={handleActins} className="text-lg text-danger cursor-pointer active:opacity-50">
+              <RiDeleteBinLine />
+            </span>
+          </Tooltip>
+        </div>
         );
       default:
         return cellValue;
@@ -374,11 +387,6 @@ export default function ExpenseTracker() {
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">
-          {selectedKeys === "all"
-            ? "All items selected"
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span>
         <Pagination
           isCompact
           showControls
@@ -398,7 +406,7 @@ export default function ExpenseTracker() {
         </div>
       </div>
     );
-  }, [selectedKeys, page, onPreviousPage, onNextPage, pages, filteredItems.length]);
+  }, [page, onPreviousPage, onNextPage, pages]);
 
   return (
     <>
@@ -408,12 +416,9 @@ export default function ExpenseTracker() {
       isHeaderSticky
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
-      selectedKeys={selectedKeys}
-      selectionMode="multiple"
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
       onSortChange={setSortDescriptor}
     >
       <TableHeader columns={headerColumns}>

@@ -3,7 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { Button, Input, DatePicker, Select, SelectItem, Chip } from "@nextui-org/react";
 import {today, getLocalTimeZone} from '@internationalized/date';
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const statusOptions = [
   {name: "Not Started", uid: "notStarted"},
@@ -43,6 +44,7 @@ const styleName = [
 
 function InsertNewData() {
   const { register, handleSubmit, control, formState: { errors } } = useForm();
+  const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const onSubmit = async (data) => {
     const decimalConvert = (num) => (Math.round(num * 100 / 100).toFixed(2));
@@ -81,15 +83,12 @@ function InsertNewData() {
     const invoiceData = {finising_rate, entry_date, quantityPcs, description, details, designName, finising_date, finising_status, styleName, cuttingNo, cutting_date, cutting_status, cutting_rate, cutting_fabricsWeight, cutting_fabricsRate, embrodery_rate, embrodery_reject, embrodery_date, embrodery_status, embrodery_desceiption, printing_desceiption, printing_rate, printing_reject, printing_date, printing_status, sewing_rate, sewing_reject, sewing_date, sewing_status, sewing_accessoriesCost};
     try {
       const response = await axiosPublic.post('/reportData', invoiceData);
-      console.log('Invoice saved:', response.data);
       if(response.data.insertedId){
-        Swal.fire({
-          icon: "success",
-          title: "project Added Successfully.",
-        });
+        toast.success('New Project Added!')
+        navigate(-1)
       }
   } catch (error) {
-      console.error('There was an error saving the invoice:', error);
+      console.error('There was an error Added New Project:', error);
   }
   };
   let localDate = today(getLocalTimeZone());
@@ -179,7 +178,7 @@ function InsertNewData() {
           placeholder="Active" 
           variant={"bordered"} 
           {...register("cutting_status")}
-          defaultSelectedKeys={["active"]}
+          defaultSelectedKeys={["notStarted"]}
           label="Cutting Status">
           {statusOptions.map((item) => (
           <SelectItem key={item.uid} textValue={item.name} value={item.uid}>
@@ -241,7 +240,7 @@ function InsertNewData() {
           labelPlacement="outside"
           variant={"bordered"} 
           {...register("embrodery_status")}
-          defaultSelectedKeys={["paused"]}
+          defaultSelectedKeys={["notStarted"]}
           label="Embrodery Status">
           {statusOptions.map((item) => (
           <SelectItem key={item.uid} textValue={item.name} value={item.uid}>
@@ -301,7 +300,7 @@ function InsertNewData() {
           placeholder="Active" 
           variant={"bordered"} 
           {...register("printing_status")}
-          defaultSelectedKeys={["complete"]}
+          defaultSelectedKeys={["notStarted"]}
           label="Printing Status">
           {statusOptions.map((item) => (
           <SelectItem key={item.uid} textValue={item.name} value={item.uid}>
@@ -361,7 +360,7 @@ function InsertNewData() {
           placeholder="Active" 
           variant={"bordered"} 
           {...register("sewing_status")}
-          defaultSelectedKeys={["active"]}
+          defaultSelectedKeys={["notStarted"]}
           label="Sewing Status">
           {statusOptions.map((item) => (
           <SelectItem key={item.uid} textValue={item.name} value={item.uid}>
@@ -423,7 +422,7 @@ function InsertNewData() {
           placeholder="Active" 
           variant={"bordered"} 
           {...register("finising_status")}
-          defaultSelectedKeys={["active"]}
+          defaultSelectedKeys={["notStarted"]}
           label="Finising Status">
           {statusOptions.map((item) => (
           <SelectItem key={item.uid} textValue={item.name} value={item.uid}>
