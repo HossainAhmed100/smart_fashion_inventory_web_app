@@ -1,17 +1,18 @@
 import { Button, Card, CardBody, Checkbox, Input } from "@nextui-org/react";
 import { Helmet } from 'react-helmet-async';    
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2';
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import auth from "../../firebase/firebase.config";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [
-    createUserWithEmailAndPassword,
-    loading
+    createUserWithEmailAndPassword, user,
+    loading, error
   ] = useCreateUserWithEmailAndPassword(auth);
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -22,15 +23,11 @@ const Register = () => {
   const from = location.state?.from?.pathname || "/";
 
   const onSubmit = async (data) => {
-    console.log("🚀 ~ onSubmit ~ data:", data)
     try {
       const result = await createUserWithEmailAndPassword(data.email, data.password);
       if (result) {
         console.log(result.user);
-        Swal.fire({
-          icon: "success",
-          title: "User Created Successfully.",
-        });
+        toast.success('Registration Success!')
         navigate(from, { replace: true });
       }
     } catch (error) {
@@ -42,6 +39,33 @@ const Register = () => {
       });
     }
   };
+  console.log(user?.email)
+  useEffect(() => {
+    if (error) {
+      let errorMessage;
+      switch (error?.code) {
+        case "auth/too-many-requests":
+          errorMessage = "Too many requests. Please reset your password!";
+          break;
+        case "auth/invalid-credential":
+          errorMessage = "Invalid credentials. Please check your email and password!";
+          break;
+        case "auth/user-not-found":
+          errorMessage = "User not found. Please check your email!";
+          break;
+        case "auth/wrong-password":
+          errorMessage = "Wrong password. Please try again!";
+          break;
+        default:
+          errorMessage = "An unexpected error occurred. Please try again!";
+      }
+      Swal.fire({
+        icon: "error",
+        title: "Authentication Error",
+        text: errorMessage,
+      });
+    }
+  }, [error]);
 
   return (
     <section className="">

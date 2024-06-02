@@ -28,6 +28,7 @@ import { LuEye } from "react-icons/lu";
 import { BiEditAlt } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import useDeleteReport from "../../hooks/useDeleteReport";
+import { Helmet } from "react-helmet-async";
 
 const columns = [
   {name: "ID", uid: "itemNo"},
@@ -366,6 +367,8 @@ export default function EmbroideryReport() {
   }, [page, onPreviousPage, onNextPage, pages]);
 
   return (
+    <>
+    <Helmet title='Embroidery Report | Mayer Doa Inventory'/>
     <Table
       aria-label="Example table with custom cells, pagination and sorting"
       isHeaderSticky
@@ -395,5 +398,6 @@ export default function EmbroideryReport() {
         )}
       </TableBody>
     </Table>
+    </>
   );
 }

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoIosAddCircle } from "react-icons/io";
 import { toast } from 'react-hot-toast';
+import { Helmet } from "react-helmet-async";
 
 
 function TagList() {
@@ -73,6 +74,7 @@ function TagList() {
     };
   return (
     <div>
+       <Helmet title='Tag List | Mayer Doa Inventory'/>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 grid-cols-1">
         <Card>
           <CardBody className="p-6 h-96 flex flex-col gap-6">

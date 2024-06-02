@@ -22,16 +22,17 @@ import {capitalize} from "./utils";
 import { FiPlus } from "react-icons/fi";
 import DateRangePicker from "../../components/Modal/DateRangePicker";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const statusColorMap = {paid: "success", due: "danger"};
 
 const columns = [
   {name: "EXPENSE ID", uid: "itemNo"},
   {name: "EXPENSE DATE", uid: "expense_date"},
-  {name: "EXPENSE FACTORY NAME", uid: "expense_factoryName"},
+  {name: "EXPENSE TAG", uid: "expense_factoryName"},
   {name: "EXPENSE DESCRIPTION", uid: "expense_desceiption"},
   {name: "PAYMENT STATUS", uid: "expense_status"},
-  {name: "EXPENSE AMOUNT", uid: "expense_amount", sortable: true},
+  {name: "AMOUNT", uid: "expense_amount", sortable: true},
   {name: "ACTIONS", uid: "actions"},
 ];
 
@@ -400,6 +401,8 @@ export default function ExpenseTracker() {
   }, [selectedKeys, page, onPreviousPage, onNextPage, pages, filteredItems.length]);
 
   return (
+    <>
+    <Helmet title='Expense Report | Mayer Doa Inventory'/>
     <Table
       aria-label="Example table with custom cells, pagination and sorting"
       isHeaderSticky
@@ -432,5 +435,6 @@ export default function ExpenseTracker() {
         )}
       </TableBody>
     </Table>
+    </>
   );
 }

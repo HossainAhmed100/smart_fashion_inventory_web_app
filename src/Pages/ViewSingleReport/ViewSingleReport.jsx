@@ -2,6 +2,7 @@ import { Button, Chip } from "@nextui-org/react";
 import { useLoaderData } from "react-router-dom"
 import { FaPrint } from "react-icons/fa6";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const statusColorMap = {
   notStarted: "warning",
@@ -82,6 +83,7 @@ function ViewSingleReport() {
     }
   return (
     <div className="p-1">
+       <Helmet title={`Project #${item?.itemNo} | Mayer Doa Inventory`}/>
       <div className="w-full pb-8 flex items-center justify-center">
       <Button onClick={handlePrint} color="danger" variant="shadow" startContent={<FaPrint />}>
         Print this Report

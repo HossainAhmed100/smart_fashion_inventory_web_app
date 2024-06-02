@@ -10,7 +10,7 @@ import { FaTasks } from "react-icons/fa";
 import { HiOutlineViewGrid } from "react-icons/hi";
 import "./Main.css"
 import auth from "../firebase/firebase.config";
-import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 function Main() {
   const [signOut] = useSignOut(auth);
@@ -168,7 +168,7 @@ function Main() {
                   <>
                   <div className="flex items-center justify-center gap-2">
                   <FaClipboardList size={18} color={isActive ? "white" : "#a1a1aa"}/>
-                  <span className={`flex-1 ml-1 truncate text-small font-medium ${isActive ? "white" : "text-default-500"} group-data-[selected=true]:text-foreground`} data-slot="heading">Expense Tracker</span>
+                  <span className={`flex-1 ml-1 truncate text-small font-medium ${isActive ? "white" : "text-default-500"} group-data-[selected=true]:text-foreground`} data-slot="heading">Expense Report</span>
                   </div>
                   <FaAngleRight size={13} color={isActive ? "white" : "#a1a1aa"}/>
                   </>
@@ -204,13 +204,7 @@ function Main() {
           const success = await signOut();
           if (success) {
             navigate("/login")
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Logout Successfull",
-                showConfirmButton: false,
-                timer: 1500
-              });
+            toast.success('Successfully Logout!')
           }
         }} color="danger" startContent={<FaArrowRightFromBracket />}>
         Sign Out

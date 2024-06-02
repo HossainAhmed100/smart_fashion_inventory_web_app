@@ -5,6 +5,7 @@ import Line from "../../components/Charts/Line";
 import Bar from "../../components/Charts/Bar";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 function Dashboard() {
   const axiosPublic = useAxiosPublic();
@@ -29,6 +30,7 @@ function Dashboard() {
   }, 0);
   return (
     <div>
+       <Helmet title='Dashboard | Mayer Doa Inventory'/>
       <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
         <div className=" bg-[#ffe300] rounded-3xl gap-4 p-8">
           <div>
