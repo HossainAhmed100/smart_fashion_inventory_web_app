@@ -1,5 +1,6 @@
-import { Chip } from "@nextui-org/react";
+import { Button, Chip } from "@nextui-org/react";
 import { useLoaderData } from "react-router-dom"
+import { FaPrint } from "react-icons/fa6";
 
 const statusColorMap = {
   notStarted: "warning",
@@ -67,13 +68,17 @@ function ViewSingleReport() {
       const totatFabricPrice = cutting_fabricsRate * cutting_fabricsWeight;
       const perPcsPrice = totatFabricPrice / quantity;
       const total = sum + perPcsPrice;
-      // console.log("🚀 ~ FinishingReport ~ total:", sum, perPcsPrice)
       const result = parseFloat(total).toFixed(2);
       return result;
   
     }
   return (
-    <div className="p-4">
+    <div className="p-1">
+      <div className="w-full pb-8 flex items-center justify-center">
+      <Button color="danger" variant="shadow" startContent={<FaPrint />}>
+        Print this Report
+      </Button>
+      </div>
       <div className="grid grid-flow-row-dense lg:grid-cols-3 md:grid-col-2 grid-cols-1 gap-4">
         <div className="p-6 rounded-lg border-1 border-gray-700">
           <div className="flex items-center justify-between w-full">
@@ -301,42 +306,6 @@ function ViewSingleReport() {
               item?.sewing_accessoriesCost, 
               item?.finising_rate,
               item?.quantityPcs)}</h1>
-            </div>
-            <div className="flex items-center justify-between w-full">
-              <h1 className="text-sm">Details:</h1>
-              <h1 className="text-sm">Tk. {item?.details}</h1>
-            </div>
-            <div className="flex items-center justify-between w-full">
-              <h1 className="text-sm">Finising Status:</h1>
-              <h1 className="text-sm">
-                <Chip 
-                  radius="sm" 
-                  size="sm" 
-                  color={statusColorMap[item.finising_status]}
-                  className="capitalize" 
-                  variant="flat">{item?.finising_status}
-                </Chip>
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="p-6 col-span-3 rounded-lg border-1 border-gray-700">
-          <div className="flex items-center justify-between w-full">
-            <h1 className="text-white font-semibold text-lg">Overview</h1>
-            <Chip radius="sm" size="sm" color="success" variant="flat">{item?.entry_date}</Chip>
-          </div>
-          <div className="flex flex-col items-start justify-center gap-2 pt-6">
-            <div className="flex items-center justify-between w-full">
-            <h1 className="text-sm">Project ID:</h1>
-            <h1 className="text-sm">#{item?.itemNo}</h1>
-            </div>
-            <div className="flex items-center justify-between w-full">
-              <h1 className="text-sm">Total Reject:</h1>
-              <h1 className="text-sm">{totalReject(item?.sewing_reject, item?.printing_reject, item?.embrodery_reject)} Pcs</h1>
-            </div>
-            <div className="flex items-center justify-between w-full">
-              <h1 className="text-sm">Finising Rate:</h1>
-              <h1 className="text-sm">Tk. {item?.finising_rate}</h1>
             </div>
             <div className="flex items-center justify-between w-full">
               <h1 className="text-sm">Details:</h1>
