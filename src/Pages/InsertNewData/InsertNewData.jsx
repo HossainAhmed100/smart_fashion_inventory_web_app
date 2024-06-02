@@ -6,12 +6,20 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 
 const statusOptions = [
-{name: "Active", uid: "active"},
-{name: "Paused", uid: "paused"},
-{name: "Complete", uid: "complete"},
+  {name: "Not Started", uid: "notStarted"},
+  {name: "In Production", uid: "inProduction"},
+  {name: "In Progress", uid: "inProgress"},
+  {name: "Cancelled", uid: "cancelled"},
+  {name: "Completed", uid: "completed"},
 ];
 
-const statusColorMap = {active: "primary",paused: "danger",complete: "success"};
+const statusColorMap = {
+  notStarted: "warning",
+  inProgress: "primary",
+  inProduction: "secondary",
+  cancelled: "danger",
+  completed: "success",
+};
 
 const cuttingNo = [23, 156, 78, 245, 187, 65, 274];
 const designName = [

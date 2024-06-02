@@ -29,12 +29,6 @@ import { BiEditAlt } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import useDeleteReport from "../../hooks/useDeleteReport";
 
-const statusColorMap = {
-  active: "primary",
-  paused: "danger",
-  complete: "success",
-};
-
 const columns = [
   {name: "ID", uid: "itemNo"},
   {name: "DATE", uid: "embrodery_date"},
@@ -52,10 +46,20 @@ const columns = [
 ];
 
 const statusOptions = [
-  {name: "Active", uid: "active"},
-  {name: "Paused", uid: "paused"},
-  {name: "Complete", uid: "complete"},
+  {name: "Not Started", uid: "notStarted"},
+  {name: "In Production", uid: "inProduction"},
+  {name: "In Progress", uid: "inProgress"},
+  {name: "Cancelled", uid: "cancelled"},
+  {name: "Completed", uid: "completed"},
 ];
+
+const statusColorMap = {
+  notStarted: "warning",
+  inProgress: "primary",
+  inProduction: "secondary",
+  cancelled: "danger",
+  completed: "success",
+};
 
 const INITIAL_VISIBLE_COLUMNS = ["itemNo", "embrodery_date", "styleName", "cuttingNo", "quantityPcs", "embrodery_reject", "embrodery_rate", "total", "embrodery_status", "actions"];
 

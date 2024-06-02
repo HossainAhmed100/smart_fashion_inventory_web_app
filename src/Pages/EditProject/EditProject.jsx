@@ -4,15 +4,23 @@ import { Button, Input, DatePicker, Select, SelectItem, Chip } from "@nextui-org
 import {today, getLocalTimeZone} from '@internationalized/date';
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 const statusOptions = [
-{name: "Active", uid: "active"},
-{name: "Paused", uid: "paused"},
-{name: "Complete", uid: "complete"},
+  {name: "Not Started", uid: "notStarted"},
+  {name: "In Production", uid: "inProduction"},
+  {name: "In Progress", uid: "inProgress"},
+  {name: "Cancelled", uid: "cancelled"},
+  {name: "Completed", uid: "completed"},
 ];
 
-const statusColorMap = {active: "primary",paused: "danger",complete: "success"};
+const statusColorMap = {
+  notStarted: "warning",
+  inProgress: "primary",
+  inProduction: "secondary",
+  cancelled: "danger",
+  completed: "success",
+};
 
 const cuttingNo = [23, 156, 78, 245, 187, 65, 274];
 const designName = [
@@ -36,6 +44,7 @@ const styleName = [
 
 function EditProject() {
   const loaderData = useLoaderData();
+  const navigate = useNavigate();
   const { register, handleSubmit, control, formState: { errors } } = useForm();
   const axiosPublic = useAxiosPublic();
   const onSubmit = async (data) => {
@@ -80,6 +89,7 @@ function EditProject() {
           icon: "success",
           title: "Project Updated Successfully.",
         });
+        navigate(-1)
       }
   } catch (error) {
       console.error('There was an error updating the Project:', error);

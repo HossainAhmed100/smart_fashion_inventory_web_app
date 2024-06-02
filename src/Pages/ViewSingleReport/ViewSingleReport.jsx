@@ -2,9 +2,11 @@ import { Chip } from "@nextui-org/react";
 import { useLoaderData } from "react-router-dom"
 
 const statusColorMap = {
-  active: "primary",
-  paused: "danger",
-  complete: "success",
+  notStarted: "warning",
+  inProgress: "primary",
+  inProduction: "secondary",
+  cancelled: "danger",
+  completed: "success",
 };
 
 function ViewSingleReport() {
@@ -80,24 +82,28 @@ function ViewSingleReport() {
           </div>
           <div className="flex flex-col items-start justify-center gap-2 pt-6">
             <div className="flex items-center justify-between w-full">
-            <h1 className="text-sm">Project ID:</h1>
-            <h1 className="text-sm">#{item?.itemNo}</h1>
+              <h1 className="text-sm">Project ID:</h1>
+              <h1 className="text-sm">#{item?.itemNo}</h1>
             </div>
             <div className="flex items-center justify-between w-full">
-            <h1 className="text-sm">Entry Date:</h1>
-            <h1 className="text-sm">{item?.entry_date}</h1>
+              <h1 className="text-sm">Total Quantity:</h1>
+              <h1 className="text-sm">{item?.quantityPcs}</h1>
             </div>
             <div className="flex items-center justify-between w-full">
-            <h1 className="text-sm">Total Quantity:</h1>
-            <h1 className="text-sm">{item?.quantityPcs}</h1>
+              <h1 className="text-sm">Design Name:</h1>
+              <h1 className="text-sm">{item?.designName}</h1>
             </div>
             <div className="flex items-center justify-between w-full">
-            <h1 className="text-sm">Style Name:</h1>
-            <h1 className="text-sm">{item?.styleName}</h1>
+              <h1 className="text-sm">Style Name:</h1>
+              <h1 className="text-sm">{item?.styleName}</h1>
             </div>
             <div className="flex items-center justify-between w-full">
-            <h1 className="text-sm">Design Name:</h1>
-            <h1 className="text-sm">{item?.designName}</h1>
+              <h1 className="text-sm">Details:</h1>
+              <h1 className="text-sm">Tk. {item?.details}</h1>
+            </div>
+            <div className="flex items-center justify-between w-full">
+              <h1 className="text-sm">Entry Date:</h1>
+              <h1 className="text-sm">{item?.entry_date}</h1>
             </div>
           </div>
         </div>
