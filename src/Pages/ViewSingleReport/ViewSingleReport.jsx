@@ -1,6 +1,7 @@
 import { Button, Chip } from "@nextui-org/react";
 import { useLoaderData } from "react-router-dom"
 import { FaPrint } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 const statusColorMap = {
   notStarted: "warning",
@@ -72,10 +73,17 @@ function ViewSingleReport() {
       return result;
   
     }
+    const handlePrint = () => {
+      Swal.fire({
+        title: "Notice",
+        text: "This Project is under Development!",
+        icon: "info"
+      });
+    }
   return (
     <div className="p-1">
       <div className="w-full pb-8 flex items-center justify-center">
-      <Button color="danger" variant="shadow" startContent={<FaPrint />}>
+      <Button onClick={handlePrint} color="danger" variant="shadow" startContent={<FaPrint />}>
         Print this Report
       </Button>
       </div>

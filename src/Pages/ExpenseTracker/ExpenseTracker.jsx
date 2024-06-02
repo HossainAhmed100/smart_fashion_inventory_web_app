@@ -19,8 +19,9 @@ import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {capitalize} from "./utils";
-import AddNewDataBtn from "../../components/Button/AddNewDataBtn";
+import { FiPlus } from "react-icons/fi";
 import DateRangePicker from "../../components/Modal/DateRangePicker";
+import Swal from "sweetalert2";
 
 const statusColorMap = {paid: "success", due: "danger"};
 
@@ -39,25 +40,98 @@ const statusOptions = [{name: "Expense Amount Paid", uid: "paid"},{name: "Expens
 const INITIAL_VISIBLE_COLUMNS = ["itemNo", "expense_date", "expense_factoryName", "expense_desceiption", "expense_amount", "expense_status", "actions"];
 
 const reportData = [
-    {
-       "_id": "feo8698608470h8394", 
-       "itemNo": "878972", 
-       "expense_date": "2024-05-16", 
-       "expense_factoryName": "Embrodery", 
-       "expense_desceiption": "Niddle 1,000 Pcs", 
-       "expense_amount": "2,340", 
-       "expense_status": "paid",
-    },
-    {
-       "_id": "feo8698808470h8394", 
-       "itemNo": "878072", 
-       "expense_date": "2024-05-26", 
-       "expense_factoryName": "Printing", 
-       "expense_desceiption": "Stauff Coffe 20 Cup", 
-       "expense_amount": "2,340", 
-       "expense_status": "due",
-    }
+  {
+     "_id": "feo8698608470h8394", 
+     "itemNo": "878972", 
+     "expense_date": "2024-05-16", 
+     "expense_factoryName": "Embroidery", 
+     "expense_desceiption": "Niddle 1,000 Pcs", 
+     "expense_amount": "2,340", 
+     "expense_status": "paid",
+  },
+  {
+     "_id": "feo8698808470h8394", 
+     "itemNo": "878072", 
+     "expense_date": "2024-05-26", 
+     "expense_factoryName": "Printing", 
+     "expense_desceiption": "Stauff Coffee 20 Cup", 
+     "expense_amount": "2,340", 
+     "expense_status": "due",
+  },
+  {
+     "_id": "feo8698908470h8394", 
+     "itemNo": "878173", 
+     "expense_date": "2024-05-30", 
+     "expense_factoryName": "Sewing", 
+     "expense_desceiption": "Thread 5,000 m", 
+     "expense_amount": "1,500", 
+     "expense_status": "paid",
+  },
+  {
+     "_id": "feo8699008470h8394", 
+     "itemNo": "878274", 
+     "expense_date": "2024-06-01", 
+     "expense_factoryName": "Finishing", 
+     "expense_desceiption": "Buttons 2,000 Pcs", 
+     "expense_amount": "700", 
+     "expense_status": "due",
+  },
+  {
+     "_id": "feo8699108470h8394", 
+     "itemNo": "878375", 
+     "expense_date": "2024-06-05", 
+     "expense_factoryName": "Cutting", 
+     "expense_desceiption": "Scissors 100 Pcs", 
+     "expense_amount": "500", 
+     "expense_status": "paid",
+  },
+  {
+     "_id": "feo8699208470h8394", 
+     "itemNo": "878476", 
+     "expense_date": "2024-06-10", 
+     "expense_factoryName": "Packaging", 
+     "expense_desceiption": "Boxes 500 Pcs", 
+     "expense_amount": "1,200", 
+     "expense_status": "due",
+  },
+  {
+     "_id": "feo8699308470h8394", 
+     "itemNo": "878577", 
+     "expense_date": "2024-06-12", 
+     "expense_factoryName": "Design", 
+     "expense_desceiption": "Design Software License", 
+     "expense_amount": "3,000", 
+     "expense_status": "paid",
+  },
+  {
+     "_id": "feo8699408470h8394", 
+     "itemNo": "878678", 
+     "expense_date": "2024-06-15", 
+     "expense_factoryName": "Quality Control", 
+     "expense_desceiption": "Quality Test Equipment", 
+     "expense_amount": "4,500", 
+     "expense_status": "due",
+  },
+  {
+     "_id": "feo8699508470h8394", 
+     "itemNo": "878779", 
+     "expense_date": "2024-06-18", 
+     "expense_factoryName": "Logistics", 
+     "expense_desceiption": "Transportation Fees", 
+     "expense_amount": "2,800", 
+     "expense_status": "paid",
+  },
+  {
+     "_id": "feo8699608470h8394", 
+     "itemNo": "878880", 
+     "expense_date": "2024-06-20", 
+     "expense_factoryName": "Marketing", 
+     "expense_desceiption": "Advertising Campaign", 
+     "expense_amount": "5,000", 
+     "expense_status": "due",
+  }
 ];
+
 
 export default function ExpenseTracker() {
   const [filterValue, setFilterValue] = React.useState("");
@@ -102,6 +176,13 @@ export default function ExpenseTracker() {
     return filteredUsers;
   }, [hasSearchFilter, filterValue, statusFilter]);
 
+  const addNewExpense = () => {
+    Swal.fire({
+      title: "Notice",
+      text: "This Project is under Development!",
+      icon: "info"
+    });
+  }
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
   const items = React.useMemo(() => {
@@ -134,7 +215,7 @@ export default function ExpenseTracker() {
       case "expense_desceiption":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue} Stitch</p>
+            <p className="text-bold text-small capitalize">{cellValue}</p>
           </div>
         );
       case "expense_amount":
@@ -259,7 +340,9 @@ export default function ExpenseTracker() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <AddNewDataBtn />
+            <Button onClick={addNewExpense} color="primary" endContent={<FiPlus />}>
+              Add New Expense
+            </Button>
           </div>
         </div>
         <div className="flex justify-between items-center">
