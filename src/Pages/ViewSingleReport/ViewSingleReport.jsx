@@ -9,6 +9,11 @@ const statusColorMap = {
 
 function ViewSingleReport() {
     const item = useLoaderData();
+    const totalReject = (sewing_reject, printing_reject, embrodery_reject)=>{
+      const rejectQuantity = [sewing_reject, printing_reject, embrodery_reject];
+      const total = rejectQuantity.reduce((quantity, current) => quantity + parseFloat(current), 0);
+      return total;
+    }
   return (
     <div className="p-4">
       <div className="grid lg:grid-cols-3 md:grid-col-2 grid-cols-1 gap-4">
@@ -132,7 +137,7 @@ function ViewSingleReport() {
             </div>
             <div className="flex items-center justify-between w-full">
               <h1 className="text-sm">Description:</h1>
-              <h1 className="text-sm">{item?.printing_desceiption}k Stich</h1>
+              <h1 className="text-sm">{item?.printing_desceiption}</h1>
             </div>
             <div className="flex items-center justify-between w-full">
               <h1 className="text-sm">Printing Status:</h1>
@@ -150,8 +155,8 @@ function ViewSingleReport() {
         </div>
         <div className="p-6 rounded-lg border-1 border-gray-700">
           <div className="flex items-center justify-between w-full">
-            <h1 className="text-white font-semibold text-lg">Printing</h1>
-            <Chip radius="sm" size="sm" color="success" variant="flat">{item?.printing_date}</Chip>
+            <h1 className="text-white font-semibold text-lg">Sewing</h1>
+            <Chip radius="sm" size="sm" color="success" variant="flat">{item?.sewing_date}</Chip>
           </div>
           <div className="flex flex-col items-start justify-center gap-2 pt-6">
             <div className="flex items-center justify-between w-full">
@@ -159,26 +164,62 @@ function ViewSingleReport() {
             <h1 className="text-sm">#{item?.itemNo}</h1>
             </div>
             <div className="flex items-center justify-between w-full">
-              <h1 className="text-sm">Printing Rate:</h1>
-              <h1 className="text-sm">Tk. {item?.printing_rate}</h1>
+              <h1 className="text-sm">Sewing Rate:</h1>
+              <h1 className="text-sm">Tk. {item?.sewing_rate}</h1>
+            </div>
+            <div className="flex items-center justify-between w-full">
+              <h1 className="text-sm">Accessories Cost:</h1>
+              <h1 className="text-sm">Tk. {item?.sewing_accessoriesCost}</h1>
             </div>
             <div className="flex items-center justify-between w-full">
               <h1 className="text-sm">Total Reject:</h1>
-              <h1 className="text-sm">{item?.printing_reject} Pcs</h1>
+              <h1 className="text-sm">{item?.sewing_reject} Pcs</h1>
             </div>
             <div className="flex items-center justify-between w-full">
-              <h1 className="text-sm">Description:</h1>
-              <h1 className="text-sm">{item?.printing_desceiption}k Stich</h1>
-            </div>
-            <div className="flex items-center justify-between w-full">
-              <h1 className="text-sm">Printing Status:</h1>
+              <h1 className="text-sm">Sewing Status:</h1>
               <h1 className="text-sm">
                 <Chip 
                   radius="sm" 
                   size="sm" 
-                  color={statusColorMap[item.printing_status]}
+                  color={statusColorMap[item.sewing_status]}
                   className="capitalize" 
-                  variant="flat">{item?.printing_status}
+                  variant="flat">{item?.sewing_status}
+                </Chip>
+              </h1>
+            </div>
+          </div>
+        </div>
+        <div className="p-6 rounded-lg border-1 border-gray-700">
+          <div className="flex items-center justify-between w-full">
+            <h1 className="text-white font-semibold text-lg">Finising</h1>
+            <Chip radius="sm" size="sm" color="success" variant="flat">{item?.finising_date}</Chip>
+          </div>
+          <div className="flex flex-col items-start justify-center gap-2 pt-6">
+            <div className="flex items-center justify-between w-full">
+            <h1 className="text-sm">Project ID:</h1>
+            <h1 className="text-sm">#{item?.itemNo}</h1>
+            </div>
+            <div className="flex items-center justify-between w-full">
+              <h1 className="text-sm">Total Reject:</h1>
+              <h1 className="text-sm">{totalReject(item?.sewing_reject, item?.printing_reject, item?.embrodery_reject)} Pcs</h1>
+            </div>
+            <div className="flex items-center justify-between w-full">
+              <h1 className="text-sm">Finising Rate:</h1>
+              <h1 className="text-sm">Tk. {item?.finising_rate}</h1>
+            </div>
+            <div className="flex items-center justify-between w-full">
+              <h1 className="text-sm">Details:</h1>
+              <h1 className="text-sm">Tk. {item?.details}</h1>
+            </div>
+            <div className="flex items-center justify-between w-full">
+              <h1 className="text-sm">Finising Status:</h1>
+              <h1 className="text-sm">
+                <Chip 
+                  radius="sm" 
+                  size="sm" 
+                  color={statusColorMap[item.finising_status]}
+                  className="capitalize" 
+                  variant="flat">{item?.finising_status}
                 </Chip>
               </h1>
             </div>
