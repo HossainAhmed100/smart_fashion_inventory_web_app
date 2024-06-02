@@ -115,7 +115,7 @@ export default function SewingReport() {
     const total = Intl.NumberFormat("en-US",options).format(totalPrice);
     const result = total;
     return result;
-}
+  }
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;

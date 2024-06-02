@@ -224,7 +224,11 @@ export default function CuttingReport() {
       case "totalCostPerUnit":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">Tk. {totalCostPerUnit(item?.cutting_fabricsWeight, item?.cutting_fabricsRate, item?.quantityPcs, item?.cutting_rate)}</p>
+            <p className="text-bold text-small capitalize">Tk. {totalCostPerUnit(
+              item?.cutting_fabricsWeight, 
+              item?.cutting_fabricsRate, 
+              item?.quantityPcs, 
+              item?.cutting_rate)}</p>
           </div>
         );
       case "cutting_status":

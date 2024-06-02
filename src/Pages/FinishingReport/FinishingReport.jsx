@@ -121,11 +121,35 @@ export default function FinishingReport() {
     return total;
   }
 
-  const totalCostPerPcs = (sewing_rate, printing_rate, embrodery_rate, sewing_accessoriesCost, finising_rate)=>{
-    const num = [sewing_rate, printing_rate, embrodery_rate, sewing_accessoriesCost, finising_rate];
+  const totalCostPerPcs = (
+    sewing_rate, 
+    printing_rate, 
+    embrodery_rate, 
+    cutting_rate, 
+    cutting_fabricsRate,
+    cutting_fabricsWeight,
+    sewing_accessoriesCost, 
+    finising_rate,
+    quantity)=>{
+
+    const num = [
+      sewing_rate, 
+      printing_rate, 
+      embrodery_rate, 
+      sewing_accessoriesCost, 
+      finising_rate,
+      cutting_rate
+    ];
+    console.log("🚀 ~ FinishingReport ~ num:", num)
+
     const sum = num.reduce((rate, current) => rate + parseFloat(current), 0);
-    console.log(sum)
-    return sum;
+    const totatFabricPrice = cutting_fabricsRate * cutting_fabricsWeight;
+    const perPcsPrice = totatFabricPrice / quantity;
+    const total = sum + perPcsPrice;
+    // console.log("🚀 ~ FinishingReport ~ total:", sum, perPcsPrice)
+    const result = parseFloat(total).toFixed(2);
+    return result;
+
   }
 
   const items = React.useMemo(() => {
@@ -212,7 +236,16 @@ export default function FinishingReport() {
       case "totalCostPerPcs":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">Tk. {totalCostPerPcs(item?.sewing_rate, item?.printing_rate, item?.embrodery_rate, item?.sewing_accessoriesCost, item?.finising_rate)}</p>
+            <p className="text-bold text-small capitalize">Tk. {totalCostPerPcs(
+              item?.sewing_rate, 
+              item?.printing_rate, 
+              item?.embrodery_rate, 
+              item?.cutting_rate,
+              item?.cutting_fabricsRate,
+              item?.cutting_fabricsWeight,
+              item?.sewing_accessoriesCost, 
+              item?.finising_rate,
+              item?.quantityPcs)}</p>
           </div>
         );
       case "finising_status":
